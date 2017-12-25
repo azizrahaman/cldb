@@ -91,6 +91,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <?php echo $msgdel; ?>
                         </div>
                       <?php } ?>
+                      <?php if ($msgupdate!=NULL) { ?>
+                        <div class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          <?php echo $msgupdate; ?>
+                        </div>
+                      <?php } ?>
                       <table class="table table-bordered">
                         <tbody><tr>
                           <th style="width: 10px;text-align:center">#</th>
@@ -177,9 +183,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h4 class="modal-title"><i class="fa fa-book"></i> Update Organization </h4>
               </div>
               <div class="modal-body">
-                <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/addorg">
+                <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/UpdateOrg">
                   <div class="box-body">
-                    <?php echo form_open('form'); ?>
+                    <?php echo form_open('update'); ?>
                     <?php echo validation_errors(); ?>
                     <input type="hidden" name="orgid" id="upuid" >
                     <div class="form-group">
