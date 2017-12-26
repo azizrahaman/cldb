@@ -52,9 +52,13 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/dist/js/demo.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url(); ?>assets/plugins/iCheck/icheck.min.js"></script>
+<!-- DataTable -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/dataTables.min.js"></script>
 
 <script type="text/javascript">
       $(document).ready(function() {
+
+        $('#libDataTable').DataTable();
 
         $('.btn-edit-trig').click(function(){
           $('#modal-edit').modal('show');
@@ -62,7 +66,7 @@ $.widget.bridge('uibutton', $.ui.button);
           var name = $(this).data('name');
           var address = $(this).data('address');
           var details = $(this).data('details');
-          
+
           $('#upuid').val(uid);
           $('#upname').val(name);
           $('#upaddress').val(address);

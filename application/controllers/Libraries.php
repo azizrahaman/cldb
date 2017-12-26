@@ -116,10 +116,8 @@ class Libraries extends CI_Controller {
 
 		public function AddDiv()
 		{
-			$this->form_validation->set_rules('orgname', 'OrgName', 'trim|required');
-			$this->form_validation->set_rules('orgaddr', 'Address', 'trim|required');
-			$this->form_validation->set_rules('orgdetails', 'Details', 'trim');
-
+			$this->form_validation->set_rules('divname', 'DivName', 'trim|required');
+			
 			if ($this->form_validation->run() == FALSE) {
 				$this->session->set_flashdata('msgerr', 'Something went wrong! Organization not inserted!');
 			} else {

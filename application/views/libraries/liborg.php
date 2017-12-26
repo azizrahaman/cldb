@@ -97,51 +97,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <?php echo $msgupdate; ?>
                         </div>
                       <?php } ?>
-                      <table class="table table-bordered">
-                        <tbody><tr>
-                          <th style="width: 10px;text-align:center">#</th>
-                          <th style="text-align:center">Name</th>
-                          <th style="text-align:center">Address</th>
-                          <th style="width: 90px;text-align:center">Action</th>
-                        </tr>
+                      <table class="table table-bordered librarytable" id="libDataTable">
+                        <thead>
+                          <tr>
+                            <th style="width: 10px;text-align:center">#</th>
+                            <th style="text-align:center">Name</th>
+                            <th style="text-align:center">Address</th>
+                            <th style="width: 90px;text-align:center">Action</th>
+                          </tr>
+                        </thead>
 
-                        <?php
-                          $n = 1;
-                          foreach ($orgs as $key) { ?>
+                        <tbody>
 
-                        <tr>
-                          <td><?php echo $n; ?></td>
-                          <td><?php echo $key->fld_orgname; ?></td>
-                          <td><?php echo $key->fld_address; ?></td>
-                          <td>
-                            <div class="btn-group">
-                              <button type="button" class="btn btn-primary btn-xs btn-edit-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-address="<?php echo $key->fld_address; ?>" data-details="<?php echo $key->fld_details; ?>">Edit</button>
-                              <a type="button" class="btn btn-danger btn-xs btn-delete-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-details="<?php echo $key->fld_address; ?>">Delet</a>
-                            </div>
-                          </td>
-                        </tr>
+                          <?php
+                            $n = 1;
+                            foreach ($orgs as $key) { ?>
 
-                        <?php $n++; } ?>
+                          <tr>
+                            <td><?php echo $n; ?></td>
+                            <td><?php echo $key->fld_orgname; ?></td>
+                            <td><?php echo $key->fld_address; ?></td>
+                            <td style="text-align:center">
+                              <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-xs btn-edit-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-address="<?php echo $key->fld_address; ?>" data-details="<?php echo $key->fld_details; ?>">Edit</button>
+                                <a type="button" class="btn btn-danger btn-xs btn-delete-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-details="<?php echo $key->fld_address; ?>">Delet</a>
+                              </div>
+                            </td>
+                          </tr>
 
-                      </tbody></table>
+                          <?php $n++; } ?>
+
+                        </tbody>
+                      </table>
                     </div>
                     <!-- /.box-body -->
 
 
-                    <div class="box-footer clearfix">
-                      <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">»</a></li>
-                      </ul>
-                    </div>
+
                   </div>
                   <!-- /.box -->
               </div>
 
+
+
+
+
+
+
+
+
         </div>
+
 
         <div class="modal modal-danger fade" id="modal-delete" data-backdrop="static">
           <div class="modal-dialog" style="width: 350px;">
