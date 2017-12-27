@@ -134,6 +134,32 @@ class Libraries extends CI_Controller {
 			}
 		}
 
+		public function GetUnio()
+		{
+			$upaid = $this->input->post('get_option');
+			if ($upaid != NULL) {
+				$sql = $this->db->get_where('tbl_unions', array('fld_upazila_id' => $upaid))->result();
+				foreach ($sql as $key) {
+					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
+				}
+			} else {
+				exit;
+			}
+		}
+
+		public function GetUnions()
+		{
+			$upaid = $this->input->post('get_option');
+			if ($upaid != NULL) {
+				$sql = $this->db->get_where('tbl_unions', array('fld_upazila_id' => $upaid))->result();
+				foreach ($sql as $key) {
+					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
+				}
+			} else {
+					exit;
+			}
+		}
+
 	// Village Librasry Ends
 
 }

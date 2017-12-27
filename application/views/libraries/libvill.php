@@ -58,19 +58,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Upzilla</label>
-                        <select class="form-control" id="upazila" style="width: 100%;">
+                        <select class="form-control" id="upazila" style="width: 100%;" onchange="get_unions(this.value);">
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Union</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <select class="form-control select2" id="unions" style="width: 100%;" onchange="get_village(this.value);">
                         </select>
                       </div>
                     </div>
@@ -81,9 +74,73 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <!-- /.box -->
               </div>
 
+
+              <div class="col-md-4">
+                <div class="box box-primary" style="display:none;" id="villtable">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Organizations</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                      <!-- /.box-header
+                      <?php if ($msgdel!=NULL) { ?>
+                        <div class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          <?php echo $msgdel; ?>
+                        </div>
+                      <?php } ?>
+                      <?php if ($msgupdate!=NULL) { ?>
+                        <div class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          <?php echo $msgupdate; ?>
+                        </div>
+                      <?php } ?> -->
+                      <table class="table table-bordered librarytable" id="libDataTablex">
+                        <thead>
+                          <tr>
+                            <th style="width: 10px;text-align:center">#</th>
+                            <th style="text-align:center">Name</th>
+                            <th style="text-align:center">Address</th>
+                            <th style="width: 90px;text-align:center">Action</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+
+                          <?php
+                            $n = 1;
+                            foreach ($divs as $key) { ?>
+
+                          <tr>
+                            <td><?php echo $n; ?></td>
+                            <td><?php echo $key->fld_name; ?></td>
+                            <td><?php echo $key->fld_bn_name; ?></td>
+                            <td style="text-align:center">
+                              <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-xs btn-edit-trig" data-uid="<?php echo $key->fld_id;?>" data-name="<?php echo $key->fld_name; ?>" data-address="<?php echo $key->fld_bn_name; ?>">Edit</button>
+                                <a type="button" class="btn btn-danger btn-xs btn-delete-trig" data-uid="<?php echo $key->fld_id;?>" data-name="<?php echo $key->fld_name; ?>" data-details="<?php echo $key->fld_bn_name; ?>">Delet</a>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <?php $n++; } ?>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.box-body -->
+
+
+
+                  </div>
+                  <!-- /.box -->
+              </div>
+
+
               <div class="col-md-4">
                 <!-- general form elements -->
-                <div class="box box-primary">
+                <div class="box box-primary" style="display:none;" id="villaddform">
                   <div class="box-header with-border">
                     <h3 class="box-title">Add Village</h3>
                   </div>
@@ -131,71 +188,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
 
 
-
-
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Organizations</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  <?php if ($msgdel!=NULL) { ?>
-                    <div class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <?php echo $msgdel; ?>
-                    </div>
-                  <?php } ?>
-                  <?php if ($msgupdate!=NULL) { ?>
-                    <div class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <?php echo $msgupdate; ?>
-                    </div>
-                  <?php } ?>
-                  <table class="table table-bordered librarytable" id="libDataTable">
-                    <thead>
-                      <tr>
-                        <th style="width: 10px;text-align:center">#</th>
-                        <th style="text-align:center">Name</th>
-                        <th style="text-align:center">Address</th>
-                        <th style="width: 90px;text-align:center">Action</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-
-                      <?php
-                        $n = 1;
-                        foreach ($orgs as $key) { ?>
-
-                      <tr>
-                        <td><?php echo $n; ?></td>
-                        <td><?php echo $key->fld_orgname; ?></td>
-                        <td><?php echo $key->fld_address; ?></td>
-                        <td style="text-align:center">
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn-xs btn-edit-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-address="<?php echo $key->fld_address; ?>" data-details="<?php echo $key->fld_details; ?>">Edit</button>
-                            <a type="button" class="btn btn-danger btn-xs btn-delete-trig" data-uid="<?php echo $key->fld_uid;?>" data-name="<?php echo $key->fld_orgname; ?>" data-details="<?php echo $key->fld_address; ?>">Delet</a>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <?php $n++; } ?>
-
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.box-body -->
-
-
-
-              </div>
-              <!-- /.box -->
-          </div>
 
         </div>
 

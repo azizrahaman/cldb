@@ -85,6 +85,26 @@ $.widget.bridge('uibutton', $.ui.button);
         });
       }
 
+
+      function get_unions(val) {
+        $.ajax({
+          type: 'post',
+          url: 'GetUnions',
+          data: {
+            get_option:val
+          },
+          success: function(response) {
+            document.getElementById("unions").innerHTML=response;
+          }
+        })
+      }
+
+      function get_village(val) {
+        $("#villtable").show("slow");
+        $("#villaddform").show("slow");
+        alert(val);
+      }
+
       $(document).ready(function() {
 
         $('.select2').select2();
