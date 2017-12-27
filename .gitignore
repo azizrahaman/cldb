@@ -33,15 +33,15 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 # Git Blocked by Aziz Rahaman
 assets/*
-system/*
-.editorconfig
-composer.json
-contributing.md
-index.php
-license.txt
-readme.rst
 user_guide/
-application/*
-!application/controllers
-!application/models
-!application/views
+#system/*
+#.editorconfig
+#composer.json
+#contributing.md
+#index.php
+#license.txt
+#readme.rst
+#application/*
+#!application/controllers
+#!application/models
+#!application/views
