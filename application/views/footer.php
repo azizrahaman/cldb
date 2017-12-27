@@ -54,9 +54,40 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/plugins/iCheck/icheck.min.js"></script>
 <!-- DataTable -->
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/dataTables.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
 <script type="text/javascript">
+
+      function get_select(val) {
+        $.ajax({
+          type: 'post',
+          url: 'GetDistricts',
+          data: {
+            get_option:val
+          },
+          success: function(response) {
+            document.getElementById("districts").innerHTML=response;
+          }
+        });
+      }
+
+      function get_upazila(val) {
+        $.ajax({
+          type: 'post',
+          url: 'GetUpazila',
+          data: {
+            get_option:val
+          },
+          success: function(response) {
+            document.getElementById("upazila").innerHTML=response;
+          }
+        });
+      }
+
       $(document).ready(function() {
+
+        $('.select2').select2();
 
         $('#libDataTable').DataTable();
 
@@ -85,6 +116,7 @@ $.widget.bridge('uibutton', $.ui.button);
             $(".delete-details").text(details);
 
         });
+
       });
 </script>
 

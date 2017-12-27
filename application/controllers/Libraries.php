@@ -92,80 +92,48 @@ class Libraries extends CI_Controller {
 
 	// Organization Librasry Ends
 
-	// Division Librasry Starts
+	// Village Librasry Starts
 
-		public function Division()
+		public function Village()
 		{
-			$sql = $this->db->get('tbl_devision')->result();
-			$msgerr = $this->session->flashdata('msgerr');
-			$msgok = $this->session->flashdata('msgok');
-			$msgdel = $this->session->flashdata('msgdel');
-			$msgupdate = $this->session->flashdata('msgupdate');
+
+			$sql = $this->db->get('tbl_division')->result();
 			$data = [
-				'divis' => $sql,
-				'msgerr' => $msgerr,
-				'msgok' => $msgok,
-				'msgdel' => $msgdel,
-				'msgupdate' => $msgupdate
+				'divs' => $sql
 			];
+
 			$this->load->view('header');
 			$this->load->view('sidebar');
-			$this->load->view('libraries/libdiv', $data);
+			$this->load->view('libraries/libvill',$data);
 			$this->load->view('footer');
 		}
 
-		public function AddDiv()
+		public function GetDistricts()
 		{
-			$this->form_validation->set_rules('divname', 'DivName', 'trim|required');
-			
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('msgerr', 'Something went wrong! Organization not inserted!');
+			$divid = $this->input->post('get_option');
+			if ($divid != NULL) {
+				$sql = $this->db->get_where('tbl_district', array('fld_division_id' => $divid))->result();
+				foreach ($sql as $key) {
+					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
+				}
 			} else {
-				$orgname = $this->input->post('orgname');
-				$orgaddr = $this->input->post('orgaddr');
-				$orgdetails = $this->input->post('orgdetails');
-
-				$add = array('fld_orgname' => $orgname, 'fld_address' => $orgaddr, 'fld_details' => $orgdetails);
-				$this->db->insert('tbl_organization', $add);
-				$this->session->set_flashdata('msgok', 'Organization addred successfully!');
+				exit;
 			}
-			redirect('Libraries/Organization');
 		}
 
-		public function DelDiv()
+		public function GetUpazila()
 		{
-			$orgid = $this->input->get('uid');
-			$this->Azmodal->delete('tbl_organization','fld_uid',$orgid);
-			if ($this->db->affected_rows()>0) {
-				$this->session->set_flashdata('msgdel', 'Organization Deleted Successfully!');
+			$distid = $this->input->post('get_option');
+			if ($distid != NULL) {
+				$sql = $this->db->get_where('tbl_upazila', array('fld_district_id' => $distid))->result();
+				foreach ($sql as $key) {
+					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
+				}
 			} else {
-				$this->session->set_flashdata('msgdel', 'Somethig wrong happen in database! Contact developer.');
+				exit;
 			}
-			redirect('Libraries/Organization');
 		}
 
-		public function UpdateDiv()
-		{
-			$this->form_validation->set_rules('orgid', 'OrgID', 'trim|required');
-			$this->form_validation->set_rules('orgname', 'OrgName', 'trim|required');
-			$this->form_validation->set_rules('orgaddr', 'Address', 'trim|required');
-			$this->form_validation->set_rules('orgdetails', 'Details', 'trim');
-
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('msgupdate', 'Something went wrong! Organization not updated!');
-			} else {
-				$orgid = $this->input->post('orgid');
-				$orgname = $this->input->post('orgname');
-				$orgaddr = $this->input->post('orgaddr');
-				$orgdetails = $this->input->post('orgdetails');
-
-				$update = array('fld_orgname' => $orgname, 'fld_address' => $orgaddr, 'fld_details' => $orgdetails);
-				$this->Azmodal->update('tbl_organization', $update, 'fld_uid', $orgid);
-				$this->session->set_flashdata('msgupdate', 'Organization update successfully!');
-			}
-			redirect('Libraries/Organization');
-		}
-
-	// Division Librasry Ends
+	// Village Librasry Ends
 
 }

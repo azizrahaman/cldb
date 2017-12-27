@@ -23,10 +23,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </a>
         <ul class="treeview-menu">
           <li><a href="<?php echo base_url(); ?>index.php/Libraries/Organization"><i class="fa fa-circle-o"></i>Organization</a></li>
-          <li><a href="<?php echo base_url(); ?>index.php/Libraries/Division"><i class="fa fa-circle-o"></i>Division</a></li>
-          <li><a href="<?php echo base_url(); ?>index.php/Libraries/District"><i class="fa fa-circle-o"></i>District</a></li>
-          <li><a href="<?php echo base_url(); ?>index.php/Libraries/Policest"><i class="fa fa-circle-o"></i>Police Station</a></li>
-          <li><a href="<?php echo base_url(); ?>index.php/Libraries/Union"><i class="fa fa-circle-o"></i>Union Porisod</a></li>
           <li><a href="<?php echo base_url(); ?>index.php/Libraries/Village"><i class="fa fa-circle-o"></i>Village</a></li>
           <li><a href="<?php echo base_url(); ?>index.php/Libraries/Ward"><i class="fa fa-circle-o"></i>Ward</a></li>
         </ul>
