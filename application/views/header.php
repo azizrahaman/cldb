@@ -33,6 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/iCheck/square/blue.css">
   <!-- DataTable - Table plugin -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bower_components/datatables/dataTables.min.css">
+  <!-- DataTable Buttons - Download Button -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bower_components/datatables/Buttons-1.5.1/css/buttons.dataTables.css">
   <!-- Select2 - Selection -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bower_components/select2/dist/css/select2.min.css">
 

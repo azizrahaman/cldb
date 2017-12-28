@@ -54,6 +54,8 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/plugins/iCheck/icheck.min.js"></script>
 <!-- DataTable -->
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/dataTables.min.js"></script>
+<!-- DataTable Button -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/Buttons-1.5.1/js/dataTables.buttons.js"></script>
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
@@ -105,11 +107,17 @@ $.widget.bridge('uibutton', $.ui.button);
         alert(val);
       }
 
+
       $(document).ready(function() {
 
         $('.select2').select2();
 
-        $('#libDataTable').DataTable();
+        var table = $('#libDataTable').DataTable( {
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        } );
+
 
         $('.btn-edit-trig').click(function(){
           $('#modal-edit').modal('show');
