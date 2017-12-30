@@ -22,13 +22,15 @@ class Libraries extends CI_Controller {
 			$msgerr = $this->session->flashdata('msgerr');
 			$msgok = $this->session->flashdata('msgok');
 			$msgdel = $this->session->flashdata('msgdel');
-			$msgupdate = $this->session->flashdata('msgupdate');
+			$msgupdatefail = $this->session->flashdata('msgupdatefail');
+			$msgupdatesucc = $this->session->flashdata('msgupdatesucc');
 			$data = [
 				'orgs' => $sql,
 				'msgerr' => $msgerr,
 				'msgok' => $msgok,
 				'msgdel' => $msgdel,
-				'msgupdate' => $msgupdate
+				'msgupdatefail' => $msgupdatefail,
+				'msgupdatesucc' => $msgupdatesucc
 			];
 			$this->load->view('header');
 			$this->load->view('sidebar');
@@ -38,55 +40,20 @@ class Libraries extends CI_Controller {
 
 		public function AddOrg()
 		{
-			$this->form_validation->set_rules('orgname', 'OrgName', 'trim|required');
-			$this->form_validation->set_rules('orgaddr', 'Address', 'trim|required');
-			$this->form_validation->set_rules('orgdetails', 'Details', 'trim');
-
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('msgerr', 'Something went wrong! Organization not inserted!');
-			} else {
-				$orgname = $this->input->post('orgname');
-				$orgaddr = $this->input->post('orgaddr');
-				$orgdetails = $this->input->post('orgdetails');
-
-				$add = array('fld_orgname' => $orgname, 'fld_address' => $orgaddr, 'fld_details' => $orgdetails);
-				$this->db->insert('tbl_organization', $add);
-				$this->session->set_flashdata('msgok', 'Organization addred successfully!');
-			}
+			$this->Azmodal->AddOrgMod();
 			redirect('Libraries/Organization');
 		}
 
 		public function DelOrg()
 		{
 			$orgid = $this->input->get('uid');
-			$this->Azmodal->delete('tbl_organization','fld_uid',$orgid);
-			if ($this->db->affected_rows()>0) {
-				$this->session->set_flashdata('msgdel', 'Organization Deleted Successfully!');
-			} else {
-				$this->session->set_flashdata('msgdel', 'Somethig wrong happen in database! Contact developer.');
-			}
+			$this->Azmodal->DelOrgMod($orgid);
 			redirect('Libraries/Organization');
 		}
 
 		public function UpdateOrg()
 		{
-			$this->form_validation->set_rules('orgid', 'OrgID', 'trim|required');
-			$this->form_validation->set_rules('orgname', 'OrgName', 'trim|required');
-			$this->form_validation->set_rules('orgaddr', 'Address', 'trim|required');
-			$this->form_validation->set_rules('orgdetails', 'Details', 'trim');
-
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('msgupdate', 'Something went wrong! Organization not updated!');
-			} else {
-				$orgid = $this->input->post('orgid');
-				$orgname = $this->input->post('orgname');
-				$orgaddr = $this->input->post('orgaddr');
-				$orgdetails = $this->input->post('orgdetails');
-
-				$update = array('fld_orgname' => $orgname, 'fld_address' => $orgaddr, 'fld_details' => $orgdetails);
-				$this->Azmodal->update('tbl_organization', $update, 'fld_uid', $orgid);
-				$this->session->set_flashdata('msgupdate', 'Organization update successfully!');
-			}
+			$this->Azmodal->UpdateOrgMod();
 			redirect('Libraries/Organization');
 		}
 
@@ -111,53 +78,19 @@ class Libraries extends CI_Controller {
 		public function GetDistricts()
 		{
 			$divid = $this->input->post('get_option');
-			if ($divid != NULL) {
-				$sql = $this->db->get_where('tbl_district', array('fld_division_id' => $divid))->result();
-				foreach ($sql as $key) {
-					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
-				}
-			} else {
-				exit;
-			}
+			$this->Azmodal->GetDistMod($divid);
 		}
 
 		public function GetUpazila()
 		{
 			$distid = $this->input->post('get_option');
-			if ($distid != NULL) {
-				$sql = $this->db->get_where('tbl_upazila', array('fld_district_id' => $distid))->result();
-				foreach ($sql as $key) {
-					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
-				}
-			} else {
-				exit;
-			}
-		}
-
-		public function GetUnio()
-		{
-			$upaid = $this->input->post('get_option');
-			if ($upaid != NULL) {
-				$sql = $this->db->get_where('tbl_unions', array('fld_upazila_id' => $upaid))->result();
-				foreach ($sql as $key) {
-					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
-				}
-			} else {
-				exit;
-			}
+			$this->Azmodal->GetUpazilaMod($distid);
 		}
 
 		public function GetUnions()
 		{
 			$upaid = $this->input->post('get_option');
-			if ($upaid != NULL) {
-				$sql = $this->db->get_where('tbl_unions', array('fld_upazila_id' => $upaid))->result();
-				foreach ($sql as $key) {
-					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
-				}
-			} else {
-					exit;
-			}
+			$this->Azmodal->GetUniMod($upaid);
 		}
 
 	// Village Librasry Ends

@@ -86,18 +86,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- /.box-header -->
                     <div class="box-body">
                       <?php if ($msgdel!=NULL) { ?>
-                        <div class="alert alert-success alert-dismissible">
+                        <div class="alert alert-danger alert-dismissible">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                           <?php echo $msgdel; ?>
                         </div>
                       <?php } ?>
-                      <?php if ($msgupdate!=NULL) { ?>
-                        <div class="alert alert-success alert-dismissible">
+                      <?php if ($msgupdatefail!=NULL) { ?>
+                        <div class="alert alert-danger alert-dismissible">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                          <?php echo $msgupdate; ?>
+                          <?php echo $msgupdatefail; ?>
                         </div>
                       <?php } ?>
-                      <table class="table table-bordered librarytable" id="libDataTable">
+                      <?php if ($msgupdatesucc!=NULL) { ?>
+                        <div class="alert alert-info alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          <?php echo $msgupdatesucc; ?>
+                        </div>
+                      <?php } ?>
+                      <table class="table table-striped table-bordered librarytable" id="libDataTable">
                         <thead>
                           <tr>
                             <th style="width: 10px;text-align:center">#</th>

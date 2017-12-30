@@ -55,69 +55,80 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- DataTable -->
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/dataTables.min.js"></script>
 <!-- DataTable Button -->
-<script src="<?php echo base_url(); ?>assets/bower_components/datatables/Buttons-1.5.1/js/dataTables.buttons.js"></script>
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/Buttons-1.5.1/js/dataTables.buttons.min.js"></script>
+<!-- DataTable Button -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/Buttons-1.5.1/js/buttons.bootstrap.min.js"></script>
+<!-- DataTable Button -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/JSZip-2.5.0/jszip.min.js"></script>
+<!-- DataTable Button -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/pdfmake.min.js"></script>
+<!-- DataTable Button -->
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/vfs_fonts.js"></script>
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
 <script type="text/javascript">
 
-      function get_select(val) {
-        $.ajax({
-          type: 'post',
-          url: 'GetDistricts',
-          data: {
-            get_option:val
-          },
-          success: function(response) {
-            document.getElementById("districts").innerHTML=response;
-          }
-        });
-      }
-
-      function get_upazila(val) {
-        $.ajax({
-          type: 'post',
-          url: 'GetUpazila',
-          data: {
-            get_option:val
-          },
-          success: function(response) {
-            document.getElementById("upazila").innerHTML=response;
-          }
-        });
-      }
-
-
-      function get_unions(val) {
-        $.ajax({
-          type: 'post',
-          url: 'GetUnions',
-          data: {
-            get_option:val
-          },
-          success: function(response) {
-            document.getElementById("unions").innerHTML=response;
-          }
-        })
-      }
-
-      function get_village(val) {
-        $("#villtable").show("slow");
-        $("#villaddform").show("slow");
-        alert(val);
-      }
-
-
       $(document).ready(function() {
 
         $('.select2').select2();
 
-        var table = $('#libDataTable').DataTable( {
-            buttons: [
-                'copy', 'excel', 'pdf'
-            ]
-        } );
+        // var table = $('#libDataTable').DataTable( {
+        //     buttons: [
+        //         'excel', 'pdf'
+        //     ]
+        // } );
+        // table.buttons().container()
+        //                 .appendTo( $('.col-sm-6:eq(1)', table.table().container() ) );
 
+        // 'excelHtml5',
+        // 'pdf'
+
+
+        // dom:
+        //     "<'row'<'col-sm-2'l><'col-sm-7 text-center'f><'col-sm-3 text-center'B>>" +
+        //     "<'row'<'col-sm-12'tr>>" +
+        //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+
+        var table = $("#libDataTable").DataTable({
+              lengthChange: false,
+              buttons: [
+                  {
+                    extend: 'colvis',
+                    text: 'Show'
+                  },
+                  {
+                    extend: 'collection',
+                    text: 'Export',
+                    buttons: [
+                      {
+                        extend: 'print',
+                        exportOptions: {
+                          columns: ':visible'
+                        }
+                      },
+                      {
+                          extend: 'pdf',
+                          filename: 'Aziz',
+                          title: 'Exported Contacts',
+                          exportOptions: {
+                              columns: ':visible'
+                          }
+                      },
+                      {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                      }
+                    ]
+                  }
+              ]
+      	});
+
+        table.buttons().container()
+        .appendTo( '#libDataTable_wrapper .col-sm-6:eq(0)' );
 
         $('.btn-edit-trig').click(function(){
           $('#modal-edit').modal('show');
@@ -146,6 +157,57 @@ $.widget.bridge('uibutton', $.ui.button);
         });
 
       });
+</script>
+
+<script type="text/javascript">
+
+    function get_select(val) {
+      $.ajax({
+        type: 'post',
+        url: 'GetDistricts',
+        data: {
+          get_option:val
+        },
+        success: function(response) {
+          document.getElementById("districts").innerHTML=response;
+        }
+      });
+    }
+
+    function get_upazila(val) {
+      $.ajax({
+        type: 'post',
+        url: 'GetUpazila',
+        data: {
+          get_option:val
+        },
+        success: function(response) {
+          document.getElementById("upazila").innerHTML=response;
+        }
+      });
+    }
+
+
+    function get_unions(val) {
+      $.ajax({
+        type: 'post',
+        url: 'GetUnions',
+        data: {
+          get_option:val
+        },
+        success: function(response) {
+          document.getElementById("unions").innerHTML=response;
+        }
+      })
+    }
+
+    function get_village(val) {
+      $("#villtable").show("slow");
+      $("#villaddform").show("slow");
+      alert(val);
+    }
+
+
 </script>
 
 </body>
