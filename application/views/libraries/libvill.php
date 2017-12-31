@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Union</label>
-                        <select class="form-control select2" id="unions" style="width: 100%;" onchange="get_village(this.value);">
+                        <select class="form-control select2" id="unions" style="width: 100%;" onchange="show_village(this.value);">
                         </select>
                       </div>
                     </div>
@@ -106,25 +106,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody id="villdata">
 
-                          <?php
-                            $n = 1;
-                            foreach ($divs as $key) { ?>
 
-                          <tr>
-                            <td><?php echo $n; ?></td>
-                            <td><?php echo $key->fld_name; ?></td>
-                            <td><?php echo $key->fld_bn_name; ?></td>
-                            <td style="text-align:center">
-                              <div class="btn-group">
-                                <button type="button" class="btn btn-primary btn-xs btn-edit-trig" data-uid="<?php echo $key->fld_id;?>" data-name="<?php echo $key->fld_name; ?>" data-address="<?php echo $key->fld_bn_name; ?>">Edit</button>
-                                <a type="button" class="btn btn-danger btn-xs btn-delete-trig" data-uid="<?php echo $key->fld_id;?>" data-name="<?php echo $key->fld_name; ?>" data-details="<?php echo $key->fld_bn_name; ?>">Delet</a>
-                              </div>
-                            </td>
-                          </tr>
-
-                          <?php $n++; } ?>
 
                         </tbody>
                       </table>
@@ -149,11 +133,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <!-- form start -->
 
-                  <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/addorg">
+                  <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/AddVill">
                     <div class="box-body">
                       <?php echo form_open('form'); ?>
                       <?php echo validation_errors(); ?>
-                      <!--
+
                       <?php if ($msgerr!=NULL) { ?>
                         <div class="alert alert-danger alert-dismissible">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -166,15 +150,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                           <?php echo $msgok; ?>
                         </div>
-                      <?php } ?>  -->
+                      <?php } ?>
 
                       <div class="form-group">
+                        <input type="hidden" name="uniid" id="form_uniid" value="">
                         <label for="exampleInputEmail1">Village Name</label>
-                        <input type="text" name="orgname" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <input type="text" name="villname" class="form-control" id="exampleInputEmail1" placeholder="Enter Village Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Organization Address</label>
-                        <input type="text" name="orgaddr" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <input type="text" name="villnamebn" class="form-control" id="exampleInputEmail1" placeholder="গ্রামের নাম লিখুন">
                       </div>
                     </div>
                     <!-- /.box-body -->

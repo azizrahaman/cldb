@@ -61,7 +61,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- DataTable Button -->
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/JSZip-2.5.0/jszip.min.js"></script>
 <!-- DataTable Button -->
-<script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/pdfmake.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/pdfmake.js"></script>
 <!-- DataTable Button -->
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/vfs_fonts.js"></script>
 <!-- Select2 -->
@@ -90,7 +90,7 @@ $.widget.bridge('uibutton', $.ui.button);
         //     "<'row'<'col-sm-12'tr>>" +
         //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 
-
+        var tbl = $('#libDataTable');
         var table = $("#libDataTable").DataTable({
               lengthChange: false,
               buttons: [
@@ -113,7 +113,15 @@ $.widget.bridge('uibutton', $.ui.button);
                           filename: 'Aziz',
                           title: 'Exported Contacts',
                           exportOptions: {
+                            columns: [ 0, 1, 2, 3],
                               columns: ':visible'
+                          },
+                          customize: function (doc) {
+                            doc.content[1].table.widths =
+                                   Array(doc.content[1].table.body[0].length + 1).join('%').split('');
+                                   console.log( doc.content );
+                            // doc.content[0].table.widths =
+                            //     Array(doc.content[0].table.body[0].length + 1).join('%').split('');
                           }
                       },
                       {
@@ -201,10 +209,29 @@ $.widget.bridge('uibutton', $.ui.button);
       })
     }
 
-    function get_village(val) {
+    function show_village(val) {
       $("#villtable").show("slow");
       $("#villaddform").show("slow");
-      alert(val);
+      GetVillData(val);
+      SetUnion_form(val);
+    }
+
+    function GetVillData(val) {
+      $.ajax({
+        type: 'post',
+        url: 'GetVillData',
+        data: {
+          union_id:val
+        },
+        success: function(data) {
+          document.getElementById("villdata").innerHTML=data;
+        }
+      })
+    }
+
+    function SetUnion_form(val) {
+        alert(val);
+        $("#form_uniid").val(val);
     }
 
 

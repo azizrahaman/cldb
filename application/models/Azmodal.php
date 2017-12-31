@@ -128,9 +128,41 @@ class Azmodal extends CI_Model
 			}
     }
 
-    public function Gei($value='')
+    public function GetVillMod($uniid)
     {
-      # code...
+      if ($uniid != NULL) {
+        $n = 1;
+				$sql = $this->db->get_where('tbl_village', array('fld_union_id' => $uniid))->result();
+				foreach ($sql as $key) {
+          echo "<tr>";
+					echo "<td>".$n."</td>";
+          echo "<td>".$key->fld_name."</td>";
+          echo "<td>".$key->fld_bn_name."</td>";
+          echo "</tr>";
+          $n++;
+				}
+			} else {
+				exit;
+			}
+    }
+
+    public function AddVillMod()
+    {
+      $this->form_validation->set_rules('uniid', 'UnionID', 'trim|required');
+			$this->form_validation->set_rules('villname', 'VillageName', 'trim|required');
+			$this->form_validation->set_rules('villnamebn', 'BanglaName', 'trim|required');
+
+			if ($this->form_validation->run() == FALSE) {
+				$this->session->set_flashdata('msgerr', 'Something went wrong! Village not inserted!');
+			} else {
+				$uniid = $this->input->post('uniid');
+				$villname = $this->input->post('villname');
+				$villnamebn = $this->input->post('villnamebn');
+
+				$add = array('fld_union_id' => $uniid, 'fld_name' => $villname, 'fld_bn_name' => $villnamebn);
+				$this->db->insert('tbl_village', $add);
+				$this->session->set_flashdata('msgok', 'Village addred successfully!');
+			}
     }
 
 

@@ -66,7 +66,9 @@ class Libraries extends CI_Controller {
 
 			$sql = $this->db->get('tbl_division')->result();
 			$data = [
-				'divs' => $sql
+				'divs' => $sql,
+				'msgerr' => $this->session->flashdata('msgerr'),
+				'msgok' => $this->session->flashdata('msgok')
 			];
 
 			$this->load->view('header');
@@ -92,7 +94,16 @@ class Libraries extends CI_Controller {
 			$upaid = $this->input->post('get_option');
 			$this->Azmodal->GetUniMod($upaid);
 		}
-
+		public function GetVillData()
+		{
+			$uniid = $this->input->post('union_id');
+			$this->Azmodal->GetVillMod($uniid);
+		}
+		public function AddVill()
+		{
+			$this->Azmodal->AddVillMod();
+			redirect('Libraries/Village');
+		}
 	// Village Librasry Ends
 
 }
