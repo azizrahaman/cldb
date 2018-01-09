@@ -97,12 +97,16 @@ $.widget.bridge('uibutton', $.ui.button);
         $('.librarytabletest').DataTable({
           "processing":true,
           "serverSide":true,
-          "ajax":"getDataTableTest",
-          "columns" : [
-            {"data" : "fld_uid"},
-            {"data" : "fld_union_id"},
-            {"data" : "fld_name"},
-            {"data" : "fld_bn_name"},
+          "order": [],
+          "ajax":{
+            url : "getDataTableTest",
+            type : "POST"
+          },
+          "columnDefs" : [
+            {
+              "targets":[0, 3],
+              "orderable":false,
+            }
           ]
         });
 

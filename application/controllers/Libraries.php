@@ -59,10 +59,25 @@ class Libraries extends CI_Controller {
 
 		public function getDataTableTest()
 		{
-			$data = $this->db->get('tbl_village')->result();
-			$datax = array();
-			$datax['data'] = $data;
-			echo json_encode($datax);
+			$this->load->model("TableCrud");
+			$fetch_data = $this->TableCrud->makeVillDatatables();
+			$data = array();
+			foreach ($fetch_data as $row) {
+				$subarray = array();
+				$subarray[] = $row->fld_uid;
+				$subarray[] = $row->fld_name;
+				$subarray[] = $row->fld_bn_name;
+				$subarray[] = '<button type="button" class="btn btn-warning btn-xs" name="update" id="'.$row->fld_uid.'"';
+				$subarray[] = '<button type="button" class="btn btn-danger btn-xs" name="delete" id="'.$row->fld_uid.'"';
+				$data[] = $subarray;
+			}
+			$output = array(
+				'draw' => intval($_POST["draw"]),
+				'recordsTotal' => $this->TableCrud->getVillAllData(),
+				'recordsFiltered' => $this->TableCrud->getVillFilteredData(),
+				"data" => $data
+			);
+			echo json_encode($output);
 		}
 
 	// Organization Librasry Ends
