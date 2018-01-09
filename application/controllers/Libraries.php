@@ -57,6 +57,14 @@ class Libraries extends CI_Controller {
 			redirect('Libraries/Organization');
 		}
 
+		public function getDataTableTest()
+		{
+			$data = $this->db->get('tbl_village')->result();
+			$datax = array();
+			$datax['data'] = $data;
+			echo json_encode($datax);
+		}
+
 	// Organization Librasry Ends
 
 	// Village Librasry Starts

@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Division</label>
                         <!-- <input type="text" name="orgname" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> -->
-                        <select class="form-control" style="width: 100%;" onchange="get_select(this.value);">
+                        <select class="form-control" id="divisions" style="width: 100%;" onchange="">
                           <option selected="selected"></option>
                           <?php
                             foreach ($divs as $key) { ?>
@@ -53,17 +53,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select District</label>
-                        <select class="form-control select2" id="districts" style="width: 100%;" onchange="get_upazila(this.value);">
+                        <select class="form-control select2" id="districts" style="width: 100%;" onchange="">
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Upzilla</label>
-                        <select class="form-control" id="upazila" style="width: 100%;" onchange="get_unions(this.value);">
+                        <select class="form-control" id="upazila" style="width: 100%;" onchange="">
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Select Union</label>
-                        <select class="form-control select2" id="unions" style="width: 100%;" onchange="show_village(this.value);">
+                        <select class="form-control select2" id="unions" style="width: 100%;" onchange="">
                         </select>
                       </div>
                     </div>
@@ -78,18 +78,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="col-md-4">
                 <div class="box box-primary" style="display:none;" id="villtable">
                     <div class="box-header with-border">
-                      <h3 class="box-title">Organizations</h3>
+                      <h3 class="box-title"><span class="uniname"></span></h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                      <!-- /.box-header
-                      <?php if ($msgdel!=NULL) { ?>
-                        <div class="alert alert-success alert-dismissible">
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                          <?php echo $msgdel; ?>
-                        </div>
-                      <?php } ?>
+                      <!-- /.box-header -->
+
+
+                    <!--
                       <?php if ($msgupdate!=NULL) { ?>
                         <div class="alert alert-success alert-dismissible">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -133,8 +130,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <!-- form start -->
 
-                  <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/AddVill">
+                  <form role="form" method="post" id="formAddVill" action="<?php echo base_url();?>index.php/Libraries/AddVill">
                     <div class="box-body">
+
+                      <div class="alert alert-success alert-dismissible villageAdded" style="display: none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <p>Village Added Successfully</p>
+                      </div>
+
                       <?php echo form_open('form'); ?>
                       <?php echo validation_errors(); ?>
 

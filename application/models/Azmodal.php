@@ -96,6 +96,7 @@ class Azmodal extends CI_Model
     {
       if ($divid != NULL) {
 				$sql = $this->db->get_where('tbl_district', array('fld_division_id' => $divid))->result();
+        echo "<option></option>";
 				foreach ($sql as $key) {
 					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
 				}
@@ -108,7 +109,8 @@ class Azmodal extends CI_Model
     {
       if ($distid != NULL) {
 				$sql = $this->db->get_where('tbl_upazila', array('fld_district_id' => $distid))->result();
-				foreach ($sql as $key) {
+        echo "<option></option>";
+        foreach ($sql as $key) {
 					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
 				}
 			} else {
@@ -120,7 +122,8 @@ class Azmodal extends CI_Model
     {
       if ($upaid != NULL) {
 				$sql = $this->db->get_where('tbl_unions', array('fld_upazila_id' => $upaid))->result();
-				foreach ($sql as $key) {
+        echo "<option></option>";
+        foreach ($sql as $key) {
 					echo "<option value=".$key->fld_id.">".$key->fld_bn_name."</option>";
 				}
 			} else {

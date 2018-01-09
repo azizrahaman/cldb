@@ -145,14 +145,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
 
 
-
-
-
-
-
-
-
         </div>
+
+
+<!-- CRUD TEST START -->
+        <div class="row">
+          <div class="col-md-12">
+
+
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">People</h3>
+                      <button class="btn btn-primary pull-right">Add People</button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                      <table class="table table-striped table-bordered librarytabletest" id="libDataTable">
+                        <thead>
+                          <tr>
+                            <th style="width: 10px;text-align:center">#</th>
+                            <th style="text-align:center">Name</th>
+                            <th style="text-align:center">Address</th>
+                            <th style="width: 90px;text-align:center">Action</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+
+                      </table>
+                    </div>
+                    <!-- /.box-body -->
+
+
+
+                  </div>
+                  <!-- /.box -->
+
+
+          </div>
+        </div>
+<!-- CRUD TEST STOP -->
+
 
 
         <div class="modal modal-danger fade" id="modal-delete" data-backdrop="static">

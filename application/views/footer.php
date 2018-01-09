@@ -67,11 +67,15 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
 
       $(document).ready(function() {
 
-        $('.select2').select2();
+        $('.select2').select2({
+          closeOnSelect: true
+        });
 
         // var table = $('#libDataTable').DataTable( {
         //     buttons: [
@@ -90,7 +94,18 @@ $.widget.bridge('uibutton', $.ui.button);
         //     "<'row'<'col-sm-12'tr>>" +
         //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 
-        var tbl = $('#libDataTable');
+        $('.librarytabletest').DataTable({
+          "processing":true,
+          "serverSide":true,
+          "ajax":"getDataTableTest",
+          "columns" : [
+            {"data" : "fld_uid"},
+            {"data" : "fld_union_id"},
+            {"data" : "fld_name"},
+            {"data" : "fld_bn_name"},
+          ]
+        });
+
         var table = $("#libDataTable").DataTable({
               lengthChange: false,
               buttons: [
@@ -152,15 +167,63 @@ $.widget.bridge('uibutton', $.ui.button);
         });
 
         $('.btn-delete-trig').click(function(){
-            $('#modal-delete').modal('show');
-            var uid = $(this).data('uid');
-            var name = $(this).data('name');
-            var details = $(this).data('details');
+            // $('#modal-delete').modal('show');
+             var uid = $(this).data('uid');
+             var name = $(this).data('name');
+            // var details = $(this).data('details');
+            //
+            // var href = $("#btn-delete").attr('href').replace("#delid", uid);
+            // $("#btn-delete").attr('href', href);
+            // $(".delete-name").text(name);
+            // $(".delete-details").text(details);
 
-            var href = $("#btn-delete").attr('href').replace("#delid", uid);
-            $("#btn-delete").attr('href', href);
-            $(".delete-name").text(name);
-            $(".delete-details").text(details);
+            swal({
+              title: 'Are you sure?',
+              text: "To Delete  to Delete " + name + "!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Poof! Your imaginary file has been deleted!", {
+                  icon: "success",
+                });
+                $.ajax({
+                    url: "DelOrg?uid=" + uid ,
+                    type: 'DELETE',
+                    success: function(result){
+                      swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                      });
+                    },
+                    error: function() { alert("Error posting feed."); }
+               });
+
+
+              }
+            });
+
+        });
+
+
+        $('form#formAddVill').submit(function(e) {
+
+            var form = $(this).serialize();
+
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "AddVill",
+                data: form, // <--- THIS IS THE CHANGE
+                dataType: "html",
+                success: function(data){
+                    $('.villageAdded').show();
+                    $('form#formAddVill')[0].reset();
+                },
+                error: function() { alert("Error posting feed."); }
+           });
 
         });
 
@@ -169,52 +232,64 @@ $.widget.bridge('uibutton', $.ui.button);
 
 <script type="text/javascript">
 
-    function get_select(val) {
+  $(function(){
+
+    $('#divisions').change(function() {
+      $("#villtable").hide();
+      $("#villaddform").hide();
       $.ajax({
         type: 'post',
         url: 'GetDistricts',
         data: {
-          get_option:val
+          get_option:this.value
         },
         success: function(response) {
           document.getElementById("districts").innerHTML=response;
         }
       });
-    }
+    })
 
-    function get_upazila(val) {
+    $('#districts').change(function() {
+      $("#villtable").hide();
+      $("#villaddform").hide();
       $.ajax({
         type: 'post',
         url: 'GetUpazila',
         data: {
-          get_option:val
+          get_option:this.value
         },
         success: function(response) {
           document.getElementById("upazila").innerHTML=response;
         }
       });
-    }
+    })
 
-
-    function get_unions(val) {
+    $('#upazila').change(function() {
+      $("#villtable").hide();
+      $("#villaddform").hide();
       $.ajax({
         type: 'post',
         url: 'GetUnions',
         data: {
-          get_option:val
+          get_option:this.value
         },
         success: function(response) {
           document.getElementById("unions").innerHTML=response;
         }
-      })
-    }
+      });
+    })
 
-    function show_village(val) {
+    $('#unions').change(function(){
       $("#villtable").show("slow");
       $("#villaddform").show("slow");
-      GetVillData(val);
-      SetUnion_form(val);
-    }
+      var uniname = $('#unions :selected').text();
+      //var uniname = $('#uniname').children("option:selected").text();;
+      var xyz = "THIS is text";
+      $('.uniname').html(uniname);
+      GetVillData(this.value);
+      SetUnion_form(this.value);
+
+    });
 
     function GetVillData(val) {
       $.ajax({
@@ -230,10 +305,64 @@ $.widget.bridge('uibutton', $.ui.button);
     }
 
     function SetUnion_form(val) {
-        alert(val);
+
         $("#form_uniid").val(val);
     }
 
+    // function get_select(val) {
+    //   $.ajax({
+    //     type: 'post',
+    //     url: 'GetDistricts',
+    //     data: {
+    //       get_option:val
+    //     },
+    //     success: function(response) {
+    //       document.getElementById("districts").innerHTML=response;
+    //     }
+    //   });
+    // }
+    //
+    // function get_upazila(val) {
+    //   $.ajax({
+    //     type: 'post',
+    //     url: 'GetUpazila',
+    //     data: {
+    //       get_option:val
+    //     },
+    //     success: function(response) {
+    //       document.getElementById("upazila").innerHTML=response;
+    //     }
+    //   });
+    // }
+    //
+    //
+    // function get_unions(val) {
+    //   $.ajax({
+    //     type: 'post',
+    //     url: 'GetUnions',
+    //     data: {
+    //       get_option:val
+    //     },
+    //     success: function(response) {
+    //       document.getElementById("unions").innerHTML=response;
+    //     }
+    //   })
+    // }
+    //
+    // function show_village(val) {
+    //   $("#villtable").show("slow");
+    //   $("#villaddform").show("slow");
+    //   GetVillData(val);
+    //   SetUnion_form(val);
+    // }
+
+    function showAjaxTable(){
+      $.ajax({
+
+      });
+    }
+
+  });
 
 </script>
 
