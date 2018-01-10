@@ -23,6 +23,8 @@ $.widget.bridge('uibutton', $.ui.button);
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap validator -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <!-- Morris.js charts -->
 <script src="<?php echo base_url(); ?>assets/bower_components/raphael/raphael.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/bower_components/morris.js/morris.min.js"></script>
@@ -77,24 +79,12 @@ $.widget.bridge('uibutton', $.ui.button);
           closeOnSelect: true
         });
 
-        // var table = $('#libDataTable').DataTable( {
-        //     buttons: [
-        //         'excel', 'pdf'
-        //     ]
-        // } );
-        // table.buttons().container()
-        //                 .appendTo( $('.col-sm-6:eq(1)', table.table().container() ) );
 
-        // 'excelHtml5',
-        // 'pdf'
+        $('.add_org_btn').on('click', function(){
+          $('#modal-insert-test').modal('show');
+        });
 
-
-        // dom:
-        //     "<'row'<'col-sm-2'l><'col-sm-7 text-center'f><'col-sm-3 text-center'B>>" +
-        //     "<'row'<'col-sm-12'tr>>" +
-        //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-        $('.librarytabletest').DataTable({
+        var orgTable = $('.librarytabletest').DataTable({
           "processing":true,
           "serverSide":true,
           "order": [],
@@ -104,8 +94,8 @@ $.widget.bridge('uibutton', $.ui.button);
           },
           "columnDefs" : [
             {
-              "targets":[0, 3],
-              "orderable":false,
+              "targets":[0,1,4],
+              "orderable":false
             }
           ]
         });
@@ -200,6 +190,8 @@ $.widget.bridge('uibutton', $.ui.button);
                       swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                       });
+                      orgTable.ajax.reload();
+
                     },
                     error: function() { alert("Error posting feed."); }
                });
@@ -231,7 +223,41 @@ $.widget.bridge('uibutton', $.ui.button);
 
         });
 
+        $(document).on('submit', '#insert_form_test', function(event){
+             event.preventDefault();
+             var orgName = $('#addorgname').val();
+             var orgAddr = $('#addorgaddr').val();
+             var extension = $('#userImage').val().split('.').pop().toLowerCase();
+             if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
+             {
+                  alert("Invalid Image File");
+                  $('#user_image').val('');
+                  return false;
+             }
+             if(orgName != '' && orgAddr != '')
+             {
+                  $.ajax({
+                       url:"insertDataAjax",
+                       method:'POST',
+                       data:new FormData(this),
+                       contentType:false,
+                       processData:false,
+                       success:function(data)
+                       {
+                            $('#insert_form_test')[0].reset();
+                            $('#modal-insert-test').modal('hide');
+                            orgTable.ajax.reload();
+                       }
+                  });
+             }
+             else
+             {
+                  alert("Bother Fields are Required");
+             }
+        });
+
       });
+
 </script>
 
 <script type="text/javascript">
@@ -360,11 +386,7 @@ $.widget.bridge('uibutton', $.ui.button);
     //   SetUnion_form(val);
     // }
 
-    function showAjaxTable(){
-      $.ajax({
 
-      });
-    }
 
   });
 

@@ -79,6 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="box box-primary" style="display:none;" id="villtable">
                     <div class="box-header with-border">
                       <h3 class="box-title"><span class="uniname"></span></h3>
+                      <button type="button" class="btn btn-primary pull-right" name="button">Add Village</button>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

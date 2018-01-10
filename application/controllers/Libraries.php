@@ -65,10 +65,14 @@ class Libraries extends CI_Controller {
 			foreach ($fetch_data as $row) {
 				$subarray = array();
 				$subarray[] = $row->fld_uid;
-				$subarray[] = $row->fld_name;
-				$subarray[] = $row->fld_bn_name;
-				$subarray[] = '<button type="button" class="btn btn-warning btn-xs" name="update" id="'.$row->fld_uid.'"';
-				$subarray[] = '<button type="button" class="btn btn-danger btn-xs" name="delete" id="'.$row->fld_uid.'"';
+				$subarray[] = $row->fld_orgname;
+				$subarray[] = $row->fld_address;
+				$subarray[] = $row->fld_details;
+
+
+
+				$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs" name="update" id="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs" name="delete" id="'.$row->fld_uid.'" >Delete</button></div>';
+				$subarray[] = '';
 				$data[] = $subarray;
 			}
 			$output = array(
@@ -78,6 +82,38 @@ class Libraries extends CI_Controller {
 				"data" => $data
 			);
 			echo json_encode($output);
+		}
+
+		function insertDataAjax()
+		{
+
+			if($_POST["action"])
+			{
+
+				$insert_data = array(
+					'fld_orgname' => $this->input->post('addorgname'),
+					'fld_address' => $this->input->post('addorgaddr'),
+					'fld_details' => $this->input->post('addorgdetails')
+				);
+				var_dump($insert_data);
+				$this->load->model('TableCrud');
+				//$this->upload_image();
+				$this->TableCrud->insertOrgMod($insert_data);
+
+				echo 'Organizaion Inserted';
+			}
+		}
+
+		function upload_image()
+		{
+			if(isset($_FILES["userImage"]))
+			{
+				$extension = explode('.', $_FILES['userImage']['name']);
+				$new_name = rand() . '.' . $extension[1];
+				$dest = "./assets/aziz/" . $new_name;
+				move_uploaded_file($_FILES['userImage']['tmp_name'], $dest);
+				return $new_name;
+			}
 		}
 
 	// Organization Librasry Ends

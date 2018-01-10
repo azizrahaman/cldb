@@ -156,7 +156,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="box box-primary">
                     <div class="box-header with-border">
                       <h3 class="box-title">People</h3>
-                      <button class="btn btn-primary pull-right">Add People</button>
+                      <button class="btn btn-primary pull-right add_org_btn">Add People</button>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -167,6 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <th style="width: 10px;text-align:center">#</th>
                             <th style="text-align:center">Name</th>
                             <th style="text-align:center">Address</th>
+                            <th style="width: 90px;text-align:center">Action</th>
                             <th style="width: 90px;text-align:center">Action</th>
                           </tr>
                         </thead>
@@ -190,35 +191,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-        <div class="modal modal-danger fade" id="modal-delete" data-backdrop="static">
-          <div class="modal-dialog" style="width: 350px;">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-book"></i> Delete Book Data </h4>
-              </div>
-              <div class="modal-body">
-                <div class="box-body table-responsive">
-                  <div class="box-body">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <input type="hidden" id="delete-id" name="delete-id" />
-                        <input type="hidden" id="delete-title" name="delete-title" />
-                        <p>Are you sure to delete this data ?</p>
-                        <div class="callout callout-danger">
-                          <p>Title: <span class="delete-name"> </span></p>
-                          <p>Author: <span class="delete-details"> </span></p>
-                        </div>
-                      </div>
+        <div class="modal fade" id="modal-insert-test" data-backdrop="static">
+          <div class="modal-dialog">
+
+            <form method="post" id="insert_form_test" class="form-horizontal" data-toggle="validator">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4>Add Organization</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group has-feedback">
+                    <label class="col-sm-4 control-label">Organization Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="addorgname" id="addorgname" placeholder="Enter Organization Name" required>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     </div>
                   </div>
-                </div><!-- /.box-body -->
+                  <div class="form-group has-feedback">
+                    <label class="col-sm-4 control-label">Organization address</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="addorgaddr" name="addorgaddr" placeholder="Enter Organization Address" minlength="4" required>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">Organization Details</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="addorgdetails" name="addorgdetails" placeholder="Enter Organization Details">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">Organization Image</label>
+                    <div class="col-sm-8">
+                      <input type="file" class="form-control" id="userImage" name="userImage">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="hidden" name="action" class="btn btn-success" value="Add" />
+                  <input type="submit" name="action" class="btn btn-success" value="Add" />
+                  <!-- <input type="submit" form="insert_form_test" class="btn btn-primary" name="action" value="Add" /> -->
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                <a href="<?php echo base_url('index.php/Libraries/DelOrg?uid=#delid') ?>" id="btn-delete" type="button" class="btn btn-primary"><i class="fa fa-check"></i> Yes</a>
-              </div>
-            </div>
+            </form>
+
           </div>
         </div>
 

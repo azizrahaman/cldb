@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2017 at 09:38 PM
+-- Generation Time: Jan 10, 2018 at 10:56 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -186,11 +186,14 @@ CREATE TABLE `tbl_organization` (
 --
 
 INSERT INTO `tbl_organization` (`fld_uid`, `fld_orgname`, `fld_address`, `fld_details`) VALUES
-(41, 'Awami League', 'Dhaka', 'Political Party'),
-(42, 'Walton BD', 'Dhaka', 'Electronics Company'),
-(50, 'BD Awami League', 'York Share', 'Political Party'),
-(51, 'Awami League', 'Dhaka', 'Political Party'),
-(52, 'Top Ten', 'Noyakhali', 'Sports Goods Provider');
+(52, 'Top Ten', 'Noyakhali', 'Sports Goods Provider'),
+(53, 'dassa', 'dassda', 'asdasd'),
+(55, 'Anondo Lohori', 'asdasdf', 'dfdf'),
+(56, 'fdgg', 'fgh', 'hjy'),
+(59, 'Awami League', 'Dhaka', 'Political Party'),
+(70, 'Airtel', 'Uttara', 'Telecom'),
+(71, 'Abir Tel', 'Kurga', 'Telecom'),
+(72, 'BanglaBash', 'Huawey', 'Dhaka');
 
 -- --------------------------------------------------------
 
@@ -3105,8 +3108,21 @@ CREATE TABLE `tbl_userinfo` (
 
 CREATE TABLE `tbl_village` (
   `fld_uid` int(11) NOT NULL,
-  `fld_upname` int(10) NOT NULL
+  `fld_union_id` int(2) UNSIGNED NOT NULL,
+  `fld_name` varchar(30) NOT NULL,
+  `fld_bn_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_village`
+--
+
+INSERT INTO `tbl_village` (`fld_uid`, `fld_union_id`, `fld_name`, `fld_bn_name`) VALUES
+(1, 746, 'Jotkura', 'জোতকুরা'),
+(2, 746, 'Norail', 'নড়াইল'),
+(4, 746, 'Bethuri', 'বেথুড়ী'),
+(5, 746, 'Ramdia', 'রামদিয়া'),
+(7, 497, 'Charigram', 'চারিগ্রাম');
 
 -- --------------------------------------------------------
 
@@ -3178,7 +3194,8 @@ ALTER TABLE `tbl_userinfo`
 -- Indexes for table `tbl_village`
 --
 ALTER TABLE `tbl_village`
-  ADD PRIMARY KEY (`fld_uid`);
+  ADD PRIMARY KEY (`fld_uid`),
+  ADD KEY `fld_union_id` (`fld_union_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -3208,7 +3225,7 @@ ALTER TABLE `tbl_division`
 -- AUTO_INCREMENT for table `tbl_organization`
 --
 ALTER TABLE `tbl_organization`
-  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `tbl_unions`
 --
@@ -3228,7 +3245,7 @@ ALTER TABLE `tbl_userinfo`
 -- AUTO_INCREMENT for table `tbl_village`
 --
 ALTER TABLE `tbl_village`
-  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
@@ -3250,6 +3267,12 @@ ALTER TABLE `tbl_unions`
 --
 ALTER TABLE `tbl_upazila`
   ADD CONSTRAINT `tbl_upazila_ibfk_1` FOREIGN KEY (`fld_district_id`) REFERENCES `tbl_district` (`fld_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tbl_village`
+--
+ALTER TABLE `tbl_village`
+  ADD CONSTRAINT `tbl_village_ibfk_1` FOREIGN KEY (`fld_union_id`) REFERENCES `tbl_unions` (`fld_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
