@@ -62,18 +62,21 @@ class Libraries extends CI_Controller {
 			$this->load->model("TableCrud");
 			$fetch_data = $this->TableCrud->makeVillDatatables();
 			$data = array();
+			$i = 1;
 			foreach ($fetch_data as $row) {
 				$subarray = array();
-				$subarray[] = $row->fld_uid;
+				$subarray[] = $i;
 				$subarray[] = $row->fld_orgname;
 				$subarray[] = $row->fld_address;
 				$subarray[] = $row->fld_details;
 
 
 
-				$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs" name="update" id="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs" name="delete" id="'.$row->fld_uid.'" >Delete</button></div>';
+				$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs editOrgAj" name="update" data-uid="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs delete-org-aj" name="delete" data-uid="'.$row->fld_uid.'" data-name="'.$row->fld_orgname.'">Delete</button></div>';
 				$subarray[] = '';
 				$data[] = $subarray;
+
+				$i++;
 			}
 			$output = array(
 				'draw' => intval($_POST["draw"]),
@@ -87,21 +90,33 @@ class Libraries extends CI_Controller {
 		function insertDataAjax()
 		{
 
-			if($_POST["action"])
+			if($_POST["action"]=="Add")
 			{
-
 				$insert_data = array(
 					'fld_orgname' => $this->input->post('addorgname'),
 					'fld_address' => $this->input->post('addorgaddr'),
 					'fld_details' => $this->input->post('addorgdetails')
 				);
-				var_dump($insert_data);
 				$this->load->model('TableCrud');
 				//$this->upload_image();
-				$this->TableCrud->insertOrgMod($insert_data);
+				$this->TableCrud->insert_crud($insert_data);
 
 				echo 'Organizaion Inserted';
 			}
+
+			if ($_POST["action"]=="Edit") {
+				$orgId = $this->input->post('orgid');
+				$updated_data = array(
+					'fld_orgname' => $this->input->post('addorgname'),
+					'fld_address' => $this->input->post('addorgaddr'),
+					'fld_details' => $this->input->post('addorgdetails'),
+				);
+				$this->load->model("TableCrud");
+				$this->TableCrud->update_crud($orgId, $updated_data);
+
+				echo "Data Updated";
+			}
+
 		}
 
 		function upload_image()
@@ -114,6 +129,21 @@ class Libraries extends CI_Controller {
 				move_uploaded_file($_FILES['userImage']['tmp_name'], $dest);
 				return $new_name;
 			}
+		}
+
+		function fetchSingleOrg()
+		{
+			$output=array();
+			$this->load->model('TableCrud');
+			$data = $this->TableCrud->fetchSingleOrg($_POST['org_id']);
+
+			foreach ($data as $row) {
+				$output['org_name'] = $row->fld_orgname;
+				$output['org_addr'] = $row->fld_address;
+				$output['org_details'] = $row->fld_details;
+			}
+
+			echo json_encode($output);
 		}
 
 	// Organization Librasry Ends

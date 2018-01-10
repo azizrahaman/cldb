@@ -155,8 +155,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">People</h3>
-                      <button class="btn btn-primary pull-right add_org_btn">Add People</button>
+                      <h3 class="box-title">Organizaions</h3>
+                      <button class="btn btn-primary pull-right add_org_btn">Add Organizaion</button>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -167,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <th style="width: 10px;text-align:center">#</th>
                             <th style="text-align:center">Name</th>
                             <th style="text-align:center">Address</th>
-                            <th style="width: 90px;text-align:center">Action</th>
+                            <th style="width: 90px;text-align:center">Details</th>
                             <th style="width: 90px;text-align:center">Action</th>
                           </tr>
                         </thead>
@@ -198,8 +198,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4>Add Organization</h4>
+                  <h4 class="orgModalHeader"></h4>
                 </div>
+
                 <div class="modal-body">
                   <div class="form-group has-feedback">
                     <label class="col-sm-4 control-label">Organization Name</label>
@@ -227,9 +228,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
                 </div>
+
                 <div class="modal-footer">
-                  <input type="hidden" name="action" class="btn btn-success" value="Add" />
-                  <input type="submit" name="action" class="btn btn-success" value="Add" />
+                  <input type="hidden" name="orgid" id="orgid" value="">
+                  <input type="hidden" name="action" id="action" class="btn btn-success" value="" />
+                  <input type="submit" class="btn btn-success" id="modalSubmitBtn" value="Add Organizaion" />
                   <!-- <input type="submit" form="insert_form_test" class="btn btn-primary" name="action" value="Add" /> -->
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
@@ -239,43 +242,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
 
-        <div class="modal fade" id="modal-edit" data-backdrop="static">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-book"></i> Update Organization </h4>
-              </div>
-              <div class="modal-body">
-                <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/UpdateOrg">
-                  <div class="box-body">
-                    <?php echo form_open('update'); ?>
-                    <?php echo validation_errors(); ?>
-                    <input type="hidden" name="orgid" id="upuid" >
-                    <div class="form-group">
-                      <label for="upname">Organization Name</label>
-                      <input type="text" name="orgname" class="form-control" id="upname" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label for="upaddress">Organization Address</label>
-                      <input type="text" name="orgaddr" class="form-control" id="upaddress" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label for="updetails">Organization Details</label>
-                      <input type="text" name="orgdetails" class="form-control" id="updetails" placeholder="Enter email">
-                    </div>
-                  </div>
-                  <!-- /.box-body -->
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                <button type="submit" class="btn btn-primary" name="updateorg"><i class="fa fa-check"></i> Update</button>
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
 
     </section>
     <!-- /.content -->

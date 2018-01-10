@@ -59,9 +59,26 @@ class TableCrud extends CI_Model
 
     // Datatable Making End
 
-    function insertOrgMod($data)
+    //Insert New Data
+
+    function insert_crud($data)
     {
       $this->db->insert('tbl_organization', $data);
+    }
+
+    //Fetch Single Organization Item
+    function fetchSingleOrg($uid)
+    {
+      $this->db->where("fld_uid", $uid);
+      $query = $this->db->get('tbl_organization');
+      return $query->result();
+    }
+
+    //Update Crud
+    function update_crud($uid, $updated_data)
+    {
+      $this->db->where("fld_uid", $uid);
+      $this->db->update("tbl_organization", $updated_data);
     }
 
 }
