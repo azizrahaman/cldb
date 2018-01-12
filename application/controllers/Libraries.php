@@ -73,7 +73,7 @@ class Libraries extends CI_Controller {
 
 
 				$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs editOrgAj" name="update" data-uid="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs delete-org-aj" name="delete" data-uid="'.$row->fld_uid.'" data-name="'.$row->fld_orgname.'">Delete</button></div>';
-				$subarray[] = '';
+				//$subarray[] = '';
 				$data[] = $subarray;
 
 				$i++;
@@ -99,7 +99,7 @@ class Libraries extends CI_Controller {
 				);
 				$this->load->model('TableCrud');
 				//$this->upload_image();
-				$this->TableCrud->insert_crud($insert_data);
+				$this->TableCrud->insert_crud('tbl_organization', $insert_data);
 
 				echo 'Organizaion Inserted';
 			}
@@ -112,7 +112,7 @@ class Libraries extends CI_Controller {
 					'fld_details' => $this->input->post('addorgdetails'),
 				);
 				$this->load->model("TableCrud");
-				$this->TableCrud->update_crud($orgId, $updated_data);
+				$this->TableCrud->update_crud("fld_uid", "tbl_organization", $orgId, $updated_data);
 
 				echo "Data Updated";
 			}
@@ -135,7 +135,7 @@ class Libraries extends CI_Controller {
 		{
 			$output=array();
 			$this->load->model('TableCrud');
-			$data = $this->TableCrud->fetchSingleOrg($_POST['org_id']);
+			$data = $this->TableCrud->fetchSingleOrg($_POST['org_id'],'tbl_organization');
 
 			foreach ($data as $row) {
 				$output['org_name'] = $row->fld_orgname;
@@ -188,11 +188,85 @@ class Libraries extends CI_Controller {
 			$uniid = $this->input->post('union_id');
 			$this->Azmodal->GetVillMod($uniid);
 		}
-		public function AddVill()
+		public function GetVillTable()
 		{
-			$this->Azmodal->AddVillMod();
-			redirect('Libraries/Village');
+			$uniid = $this->input->post('union_id');
+
+			$this->load->model("TableCrud");
+			$fetch_ward = $this->TableCrud->fetch_all($uniid,'tbl_village');
+			$data = array();
+			$i = 1;
+			foreach ($fetch_ward as $row) {
+					$subarray = array();
+					$subarray[] = $i;
+					$subarray[] = $row->fld_name;
+					$subarray[] = $row->fld_bn_name;
+
+					$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs edit-vill-aj" name="update" data-uid="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs deleteVillAj" name="delete" data-uid="'.$row->fld_uid.'" data-name="'.$row->fld_name.'">Delete</button></div>';
+					$subarray[] = '';
+					$data[] = $subarray;
+
+					$i++;
+			}
+			$output = array(
+				'recordsTotal' => $this->TableCrud->getVillAllData(),
+				'recordsFiltered' => $this->TableCrud->getVillFilteredData(),
+				"data" => $data
+			);
+			echo json_encode($output);
 		}
+
+		function addVillage()
+		{
+
+			if ($_POST['villaction']=='Add') {
+				$incomming_data = array(
+					'fld_union_id' => $this->input->post('unionId'),
+					'fld_name' => $this->input->post('inputVillName'),
+					'fld_bn_name' => $this->input->post('inputVillNameBn')
+				);
+				$this->load->model('TableCrud');
+				$this->TableCrud->insert_crud('tbl_village', $incomming_data);
+				echo "Data Inserted";
+			}
+
+			elseif ($_POST['villaction']=='Edit') {
+				$villID = $this->input->post('villId');
+				$updated_data = array(
+					'fld_name' => $this->input->post('inputVillName'),
+					'fld_bn_name' => $this->input->post('inputVillNameBn')
+				);
+				$this->load->model("TableCrud");
+				$this->TableCrud->update_crud("fld_uid", "tbl_village", $villID, $updated_data);
+				echo "Data Updated " . $villID . "aaa";
+
+			}
+
+		}
+
+		function fetchSingleVill()
+		{
+			$villID = $this->input->post('vill_id');
+			$output=array();
+			$this->load->model('TableCrud');
+			$data = $this->TableCrud->fetchSingleOrg($villID,'tbl_village');
+
+			foreach ($data as $row) {
+				$output['vill_name'] = $row->fld_name;
+				$output['vill_namebn'] = $row->fld_bn_name;
+			}
+			echo json_encode($output);
+		}
+
+		function delSingleVill()
+		{
+			$this->load->model('TableCrud');
+			$this->TableCrud->delete_single_item($_POST['vill_id'], 'tbl_village');
+			echo "Village Deleted";
+		}
+
+
+
 	// Village Librasry Ends
 
 }

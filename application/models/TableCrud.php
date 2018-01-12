@@ -61,24 +61,38 @@ class TableCrud extends CI_Model
 
     //Insert New Data
 
-    function insert_crud($data)
+    function insert_crud($table, $data)
     {
-      $this->db->insert('tbl_organization', $data);
+      $this->db->insert($table, $data);
     }
 
     //Fetch Single Organization Item
-    function fetchSingleOrg($uid)
+    function fetchSingleOrg($uid, $table)
     {
       $this->db->where("fld_uid", $uid);
-      $query = $this->db->get('tbl_organization');
+      $query = $this->db->get($table);
       return $query->result();
     }
 
     //Update Crud
-    function update_crud($uid, $updated_data)
+    function update_crud($colname, $tbl_name, $uid, $updated_data)  //Column name where data will be searchd, thne table name, then data to be searched and then updated data
     {
-      $this->db->where("fld_uid", $uid);
-      $this->db->update("tbl_organization", $updated_data);
+      $this->db->where($colname, $uid);
+      $this->db->update($tbl_name, $updated_data);
+    }
+
+    //Get All Ward of a Union
+    function fetch_all($uniid, $tbl_name)
+    {
+      $this->db->where('fld_union_id', $uniid);
+      $query = $this->db->get($tbl_name);
+      return $query->result();
+    }
+
+    function delete_single_item($id, $table)
+    {
+      $this->db->where("fld_uid", $id);
+      $this->db->delete($table);
     }
 
 }
