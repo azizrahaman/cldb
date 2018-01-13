@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
 
 
-              <div class="col-md-4">
+              <div class="col-md-8">
                 <div class="box box-primary" style="display:none;" id="villtable">
                     <div class="box-header with-border">
                       <h3 class="box-title"><span class="uniname"></span></h3>
@@ -100,6 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <th>#</th>
                             <th>Name</th>
                             <th>নাম</th>
+                            <th>Ward No</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -115,7 +116,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <!-- /.box -->
               </div>
 
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <div class="box box-primary" style="display:none" id="wardtable">
                   <div class="box-header with-border">
                     <h3 class="box-title">Wards<span class="uniname"></span></h3>
@@ -138,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 
@@ -172,40 +173,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     </div>
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <input type="hidden" name="unionId" id="unionIdforInsert" value="">
-                  <input type="hidden" name="villId" id="villIdforupdate" value="">
-                  <input type="hidden" name="villaction" id="villaction" value="">
-                  <input type="submit" class="btn btn-success" id="formVillSubmit" value="Add Village">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-
-        <div class="modal fade" id="modalAddVill" data-backdrop="static">
-          <div class="modal-dialog">
-            <form class="form-horizontal" method="post" id="formVillCrud" data-toggle="validator">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="titleAddVill"></h4>
-                </div>
-                <div class="modal-body">
                   <div class="form-group has-feedback">
-                    <label class="col-sm-4 control-label">Village Name</label>
+                    <label class="col-sm-4 control-label">Ward No</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" name="inputVillName" id="inputVillName" placeholder="Village Name" required>
-                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    </div>
-                  </div>
-                  <div class="form-group has-feedback">
-                    <label class="col-sm-4 control-label">গ্রামের নাম</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" name="inputVillNameBn" id="inputVillNameBn" placeholder="গ্রামের নাম বাংলায়" required>
+                      <input type="text" class="form-control" name="inputwardno" id="inputwardno" placeholder="Ward Number" required>
                       <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     </div>
                   </div>
@@ -221,7 +192,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </form>
           </div>
         </div>
-
 
 
 

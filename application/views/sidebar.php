@@ -16,6 +16,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </li>
       <li class="treeview">
         <a href="#">
+          <i class="fa fa-user"></i> <span>Contacts</span>
+          <span class="pull-right-container">
+            <small class="fa fa-angle-left pull-right"></small>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/View_Contacts"><i class="fa fa-circle-o"></i>View Contacts</a></li>
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/Add_Contact"><i class="fa fa-circle-o"></i>Add Contact</a></li>
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/Send_SMS"><i class="fa fa-circle-o"></i>Send SMS</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
           <i class="fa fa-th"></i> <span>Libraries</span>
           <span class="pull-right-container">
             <small class="fa fa-angle-left pull-right"></small>

@@ -68,6 +68,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/bower_components/datatables/pdfmake-0.1.32/vfs_fonts.js"></script>
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/dist/js/fileinput.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

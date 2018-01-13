@@ -201,6 +201,7 @@ class Libraries extends CI_Controller {
 					$subarray[] = $i;
 					$subarray[] = $row->fld_name;
 					$subarray[] = $row->fld_bn_name;
+					$subarray[] = $row->fld_ward_no;
 
 					$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs edit-vill-aj" name="update" data-uid="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs deleteVillAj" name="delete" data-uid="'.$row->fld_uid.'" data-name="'.$row->fld_name.'">Delete</button></div>';
 					$subarray[] = '';
@@ -223,8 +224,10 @@ class Libraries extends CI_Controller {
 				$incomming_data = array(
 					'fld_union_id' => $this->input->post('unionId'),
 					'fld_name' => $this->input->post('inputVillName'),
-					'fld_bn_name' => $this->input->post('inputVillNameBn')
+					'fld_bn_name' => $this->input->post('inputVillNameBn'),
+					'fld_ward_no' => $this->input->post('inputwardno')
 				);
+
 				$this->load->model('TableCrud');
 				$this->TableCrud->insert_crud('tbl_village', $incomming_data);
 				echo "Data Inserted";
@@ -234,7 +237,8 @@ class Libraries extends CI_Controller {
 				$villID = $this->input->post('villId');
 				$updated_data = array(
 					'fld_name' => $this->input->post('inputVillName'),
-					'fld_bn_name' => $this->input->post('inputVillNameBn')
+					'fld_bn_name' => $this->input->post('inputVillNameBn'),
+					'fld_ward_no' => $this->input->post('inputwardno')
 				);
 				$this->load->model("TableCrud");
 				$this->TableCrud->update_crud("fld_uid", "tbl_village", $villID, $updated_data);
