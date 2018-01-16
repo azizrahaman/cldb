@@ -22,9 +22,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="<?php echo base_url(); ?>index.php/Contacts/View_Contacts"><i class="fa fa-circle-o"></i>View Contacts</a></li>
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/View_Contacts"><i class="fa fa-circle-o"></i>Manage Contacts</a></li>
           <li><a href="<?php echo base_url(); ?>index.php/Contacts/Add_Contact"><i class="fa fa-circle-o"></i>Add Contact</a></li>
-          <li><a href="<?php echo base_url(); ?>index.php/Contacts/Send_SMS"><i class="fa fa-circle-o"></i>Send SMS</a></li>
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/Export_Contacts"><i class="fa fa-circle-o"></i>Export Contacts</a></li>
+          <li><a href="<?php echo base_url(); ?>index.php/Contacts/Send_SMS"><i class="fa fa-circle-o"></i>Export Contacts</a></li>
         </ul>
       </li>
       <li class="treeview">

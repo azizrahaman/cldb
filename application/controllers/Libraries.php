@@ -135,7 +135,7 @@ class Libraries extends CI_Controller {
 		{
 			$output=array();
 			$this->load->model('TableCrud');
-			$data = $this->TableCrud->fetchSingleOrg($_POST['org_id'],'tbl_organization');
+			$data = $this->TableCrud->fetchSingleRow($_POST['org_id'],'tbl_organization');
 
 			foreach ($data as $row) {
 				$output['org_name'] = $row->fld_orgname;
@@ -144,6 +144,99 @@ class Libraries extends CI_Controller {
 			}
 
 			echo json_encode($output);
+		}
+
+		function fetchSingleSuborg()
+		{
+			$output = array();
+			$this->load->model('TableCrud');
+			$data = $this->TableCrud->fetchSingleRow($_POST['suborg_id'], 'tbl_suborg');
+
+			foreach ($data as $key) {
+				$output['org_id'] = $key->fld_org_id;
+				$output['suborg_name'] = $key->fld_suborg;
+				$output['suborg_details'] = $key->fld_details;
+			}
+
+			echo json_encode($output);
+		}
+
+
+		function GetOrgName()
+	  {
+	    $this->Azmodal->getAllTableData();
+	  }
+
+		function InsertSubOrg()
+		{
+			$this->load->library('form_validation');
+			$this->load->helper('form');
+
+			$this->form_validation->set_rules('orgForSuborg', 'Organization ID', 'required');
+			$this->form_validation->set_rules('suborgname', 'Sub Organization Name', 'required');
+			$this->form_validation->set_rules('suborgdetails', 'Sub Organization Details', 'required');
+
+			if($this->form_validation->run()==False) {
+					exit();
+			} else {
+				if ($_POST['suborgaction'] == 'Add') {
+					$Data = array();
+					$Data['fld_org_id'] = $this->input->post('orgForSuborg');
+					$Data['fld_suborg'] = $this->input->post('suborgname');
+					$Data['fld_details'] = $this->input->post('suborgdetails');
+					$this->load->model('TableCrud');
+					$this->TableCrud->insert_crud('tbl_suborg',$Data);
+				}
+				if ($_POST['suborgaction'] == 'Edit') {
+					$Data = array();
+					$suborgId = $this->input->post('suborgid');
+					$Data['fld_org_id'] = $this->input->post('orgForSuborg');
+					$Data['fld_suborg'] = $this->input->post('suborgname');
+					$Data['fld_details'] = $this->input->post('suborgdetails');
+					$this->load->model('TableCrud');
+					$this->TableCrud->update_crud('fld_uid', 'tbl_suborg', $suborgId, $Data);
+					echo "Data Updated";
+				}
+			}
+
+		}
+
+
+
+		function getSubOrgTable()
+		{
+			$this->load->model("TableCrud");
+			$fetch_data = $this->TableCrud->makeSubOrgDatatables();
+			$data = array();
+			$i = 1;
+			foreach ($fetch_data as $row) {
+				$subarray = array();
+				$subarray[] = $i;
+				$subarray[] = $row->fld_orgname;
+				$subarray[] = $row->fld_suborg;
+				$subarray[] = $row->fld_details;
+
+				$subarray[] = '<div class="btn-group"><button type="button" class="btn btn-warning btn-xs editsubOrgAj" name="update" data-souid="'.$row->fld_uid.'" >Edit</button><button type="button" class="btn btn-danger btn-xs delete-suborg-aj" name="delete" data-souid="'.$row->fld_uid.'" data-soname="'.$row->fld_suborg.'">Delete</button></div>';
+				//$subarray[] = '';
+				$data[] = $subarray;
+
+				$i++;
+			}
+			$output = array(
+				'draw' => intval($_POST["draw"]),
+				'recordsTotal' => $this->TableCrud->getSuborgAll(),
+				'recordsFiltered' => $this->TableCrud->getFilteredSuborg(),
+				"data" => $data
+			);
+			echo json_encode($output);
+		}
+
+		function DelSubOrg()
+		{
+			$suborgId = $this->input->post('suborgId');
+			$this->load->model('TableCrud');
+			$this->TableCrud->delete_single_item($suborgId, 'tbl_suborg');
+			echo "Deleted";
 		}
 
 	// Organization Librasry Ends

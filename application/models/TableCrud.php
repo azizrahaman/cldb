@@ -14,6 +14,13 @@ class TableCrud extends CI_Model
     var $select_column_org = array('fld_uid' , 'fld_orgname', 'fld_address', 'fld_details');
     var $order_column_org = array(null, 'fld_orgname', 'fld_address', null, null);
 
+
+    var $tablesuborg = "tbl_suborg";
+    var $select_column_suborg = array("tbl_suborg.fld_uid", 'tbl_suborg.fld_org_id', 'tbl_suborg.fld_suborg', 'tbl_suborg.fld_details', 'tbl_organization.fld_orgname');
+    var $order_column_suborg = array(null, 'fld_org_id', 'fld_suborg', null, null);
+
+// Organization orgDataTable
+
     function makeVillQuery()
     {
       $this->db->select($this->select_column_org);
@@ -59,6 +66,52 @@ class TableCrud extends CI_Model
 
     // Datatable Making End
 
+    // Suborganization table
+
+    function makeSubOrgQuery() {
+
+      $this->db->select($this->select_column_suborg);
+      $this->db->from($this->tablesuborg);
+      $this->db->join('tbl_organization', 'tbl_suborg.fld_org_id = tbl_organization.fld_uid');
+
+      if (isset($_POST["search"]["value"])) {
+        $this->db->like("fld_org_id", $_POST["search"]["value"]);
+        $this->db->or_like("fld_suborg", $_POST["search"]["value"]);
+      }
+
+      if (isset($_POST["order"])) {
+        $this->db->order_by($this->order_column_suborg[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+      } else {
+        $this->db->order_by('fld_uid', 'DESC');
+      }
+
+    }
+
+    function makeSubOrgDatatables()
+    {
+      $this->makeSubOrgQuery();
+      if ($_POST['length'] != -1) {
+        $this->db->limit($_POST['length'], $_POST['start']);
+      }
+
+      $query = $this->db->get();
+      return $query->result();
+    }
+
+    function getFilteredSuborg()
+    {
+      $this->makeSubOrgQuery();
+      $query = $this->db->get();
+      return $query->num_rows();
+    }
+
+    function getSuborgAll()
+    {
+      $this->db->select('*');
+      $this->db->from($this->tablesuborg);
+      return $this->db->count_all_results();
+    }
+
     //Insert New Data
 
     function insert_crud($table, $data)
@@ -66,8 +119,8 @@ class TableCrud extends CI_Model
       $this->db->insert($table, $data);
     }
 
-    //Fetch Single Organization Item
-    function fetchSingleOrg($uid, $table)
+    //Fetch Single Row Item
+    function fetchSingleRow($uid, $table)
     {
       $this->db->where("fld_uid", $uid);
       $query = $this->db->get($table);

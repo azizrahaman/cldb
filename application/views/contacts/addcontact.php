@@ -117,7 +117,7 @@
 			<div class="col-sm-12">
 				<div class="form-group">
 					<label>Industry</label>
-					<select class="form-control select2" id="unions" style="width: 100%;" onchange=""  multiple="multiple">
+					<select class="form-control select2" id="unions" style="width: 100%;" onchange="">
             <option value="" selected="selected">-- select industry --</option>
             <option value="1">Accounting / Audit / Tax Services</option>
             <option value="2">Advertising / Marketing / Promotion / PR</option>

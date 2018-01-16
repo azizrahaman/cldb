@@ -92,6 +92,18 @@ class Azmodal extends CI_Model
 			}
     }
 
+    function getAllTableData()
+    {
+      $this->db->Select('*');
+      $this->db->from('tbl_organization');
+      $query = $this->db->get()->result();
+
+      echo '<option></option>';
+      foreach ($query as $row) {
+        echo '<option value='.$row->fld_uid.'>'.$row->fld_orgname.'</option>';
+      }
+    }
+
     public function GetDistMod($divid)
     {
       if ($divid != NULL) {

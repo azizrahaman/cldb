@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2018 at 10:56 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.1.7
+-- Generation Time: Jan 15, 2018 at 06:39 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,9 +52,9 @@ INSERT INTO `tbl_admin` (`fld_uid`, `fld_username`, `fld_name`, `fld_password`, 
 --
 
 CREATE TABLE `tbl_designation` (
-  `fld_uid` int(11) NOT NULL,
+  `fld_uid` int(11) UNSIGNED NOT NULL,
   `fld_desgname` varchar(64) NOT NULL,
-  `fld_orgname` int(10) NOT NULL
+  `fld_orgname` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -175,7 +175,7 @@ INSERT INTO `tbl_division` (`fld_id`, `fld_name`, `fld_bn_name`) VALUES
 --
 
 CREATE TABLE `tbl_organization` (
-  `fld_uid` int(11) NOT NULL,
+  `fld_uid` int(11) UNSIGNED NOT NULL,
   `fld_orgname` varchar(64) NOT NULL,
   `fld_address` varchar(128) NOT NULL,
   `fld_details` varchar(128) NOT NULL
@@ -186,14 +186,11 @@ CREATE TABLE `tbl_organization` (
 --
 
 INSERT INTO `tbl_organization` (`fld_uid`, `fld_orgname`, `fld_address`, `fld_details`) VALUES
-(52, 'Top Ten', 'Noyakhali', 'Sports Goods Provider'),
-(53, 'dassa', 'dassda', 'asdasd'),
 (55, 'Anondo Lohori', 'asdasdf', 'dfdf'),
-(56, 'fdgg', 'fgh', 'hjy'),
 (59, 'Awami League', 'Dhaka', 'Political Party'),
 (70, 'Airtel', 'Uttara', 'Telecom'),
 (71, 'Abir Tel', 'Kurga', 'Telecom'),
-(72, 'BanglaBash', 'Huawey', 'Dhaka');
+(73, 'BNP', 'Purana Paltan', 'Political Party');
 
 -- --------------------------------------------------------
 
@@ -3088,16 +3085,20 @@ CREATE TABLE `tbl_userinfo` (
   `fld_name` varchar(64) NOT NULL,
   `fld_fname` varchar(64) NOT NULL,
   `fld_phone` varchar(33) NOT NULL,
-  `fld_designation` varchar(64) NOT NULL,
-  `fld_organization` varchar(100) NOT NULL,
+  `fld_designation` int(11) UNSIGNED NOT NULL,
+  `fld_organization` int(11) UNSIGNED NOT NULL,
+  `fld_suborganization` varchar(60) NOT NULL,
   `fld_status` int(2) NOT NULL,
   `fld_address` varchar(128) NOT NULL,
-  `fld_ward` int(2) NOT NULL,
-  `fld_village` varchar(30) NOT NULL,
-  `fld_up` varchar(30) NOT NULL,
-  `fld_ps` varchar(30) NOT NULL,
-  `fld_division` varchar(64) NOT NULL,
-  `fld_photo` varchar(128) NOT NULL
+  `fld_ward` int(11) NOT NULL,
+  `fld_village` int(11) NOT NULL,
+  `fld_union` int(2) UNSIGNED NOT NULL,
+  `fld_upazilla` int(2) UNSIGNED NOT NULL,
+  `fld_district` int(2) UNSIGNED NOT NULL,
+  `fld_division` int(2) UNSIGNED NOT NULL,
+  `fld_photo` varchar(128) NOT NULL,
+  `fld_createon` date NOT NULL,
+  `fld_isdeleted` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -3110,19 +3111,23 @@ CREATE TABLE `tbl_village` (
   `fld_uid` int(11) NOT NULL,
   `fld_union_id` int(2) UNSIGNED NOT NULL,
   `fld_name` varchar(30) NOT NULL,
-  `fld_bn_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `fld_bn_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `fld_ward_no` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_village`
 --
 
-INSERT INTO `tbl_village` (`fld_uid`, `fld_union_id`, `fld_name`, `fld_bn_name`) VALUES
-(1, 746, 'Jotkura', 'জোতকুরা'),
-(2, 746, 'Norail', 'নড়াইল'),
-(4, 746, 'Bethuri', 'বেথুড়ী'),
-(5, 746, 'Ramdia', 'রামদিয়া'),
-(7, 497, 'Charigram', 'চারিগ্রাম');
+INSERT INTO `tbl_village` (`fld_uid`, `fld_union_id`, `fld_name`, `fld_bn_name`, `fld_ward_no`) VALUES
+(2, 746, 'Norail', 'নড়াইল', '3'),
+(4, 746, 'Bethuri', 'বেথুড়ী', '8'),
+(5, 746, 'Ramdia', 'রামদিয়া', ''),
+(7, 497, 'Charigram', 'চারিগ্রাম', ''),
+(8, 2207, 'Jali', 'jkaji', ''),
+(10, 746, 'Rajoir', 'রাজৈর', ''),
+(15, 746, 'Jotkura', 'জোতকুরা', ''),
+(16, 746, 'Ghonapara', 'ঘোনাপাড়া', '7');
 
 -- --------------------------------------------------------
 
@@ -3149,7 +3154,8 @@ ALTER TABLE `tbl_admin`
 -- Indexes for table `tbl_designation`
 --
 ALTER TABLE `tbl_designation`
-  ADD PRIMARY KEY (`fld_uid`);
+  ADD PRIMARY KEY (`fld_uid`),
+  ADD KEY `fld_orgname` (`fld_orgname`);
 
 --
 -- Indexes for table `tbl_district`
@@ -3188,7 +3194,14 @@ ALTER TABLE `tbl_upazila`
 -- Indexes for table `tbl_userinfo`
 --
 ALTER TABLE `tbl_userinfo`
-  ADD PRIMARY KEY (`fld_uid`);
+  ADD PRIMARY KEY (`fld_uid`),
+  ADD KEY `fld_designation` (`fld_designation`),
+  ADD KEY `fld_organization` (`fld_organization`),
+  ADD KEY `fld_village` (`fld_village`),
+  ADD KEY `fld_division` (`fld_division`),
+  ADD KEY `fld_district` (`fld_district`),
+  ADD KEY `fld_upazilla` (`fld_upazilla`),
+  ADD KEY `fld_union` (`fld_union`);
 
 --
 -- Indexes for table `tbl_village`
@@ -3206,49 +3219,64 @@ ALTER TABLE `tbl_village`
 --
 ALTER TABLE `tbl_admin`
   MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `tbl_designation`
 --
 ALTER TABLE `tbl_designation`
-  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fld_uid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tbl_district`
 --
 ALTER TABLE `tbl_district`
   MODIFY `fld_id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
 --
 -- AUTO_INCREMENT for table `tbl_division`
 --
 ALTER TABLE `tbl_division`
   MODIFY `fld_id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `tbl_organization`
 --
 ALTER TABLE `tbl_organization`
-  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `fld_uid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
 --
 -- AUTO_INCREMENT for table `tbl_unions`
 --
 ALTER TABLE `tbl_unions`
   MODIFY `fld_id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2351;
+
 --
 -- AUTO_INCREMENT for table `tbl_upazila`
 --
 ALTER TABLE `tbl_upazila`
   MODIFY `fld_id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=493;
+
 --
 -- AUTO_INCREMENT for table `tbl_userinfo`
 --
 ALTER TABLE `tbl_userinfo`
   MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tbl_village`
 --
 ALTER TABLE `tbl_village`
-  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `fld_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tbl_designation`
+--
+ALTER TABLE `tbl_designation`
+  ADD CONSTRAINT `tbl_designation_ibfk_1` FOREIGN KEY (`fld_orgname`) REFERENCES `tbl_organization` (`fld_uid`);
 
 --
 -- Constraints for table `tbl_district`
@@ -3267,6 +3295,18 @@ ALTER TABLE `tbl_unions`
 --
 ALTER TABLE `tbl_upazila`
   ADD CONSTRAINT `tbl_upazila_ibfk_1` FOREIGN KEY (`fld_district_id`) REFERENCES `tbl_district` (`fld_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tbl_userinfo`
+--
+ALTER TABLE `tbl_userinfo`
+  ADD CONSTRAINT `tbl_userinfo_ibfk_3` FOREIGN KEY (`fld_village`) REFERENCES `tbl_village` (`fld_uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_userinfo_ibfk_4` FOREIGN KEY (`fld_division`) REFERENCES `tbl_division` (`fld_id`),
+  ADD CONSTRAINT `tbl_userinfo_ibfk_5` FOREIGN KEY (`fld_district`) REFERENCES `tbl_district` (`fld_id`),
+  ADD CONSTRAINT `tbl_userinfo_ibfk_6` FOREIGN KEY (`fld_upazilla`) REFERENCES `tbl_upazila` (`fld_id`),
+  ADD CONSTRAINT `tbl_userinfo_ibfk_7` FOREIGN KEY (`fld_union`) REFERENCES `tbl_unions` (`fld_id`),
+  ADD CONSTRAINT `tbl_userinfo_ibfk_8` FOREIGN KEY (`fld_organization`) REFERENCES `tbl_organization` (`fld_uid`),
+  ADD CONSTRAINT `tbl_userinfo_ibfk_9` FOREIGN KEY (`fld_designation`) REFERENCES `tbl_designation` (`fld_uid`);
 
 --
 -- Constraints for table `tbl_village`

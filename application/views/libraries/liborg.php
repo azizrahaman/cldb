@@ -63,7 +63,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
 <!-- CRUD TEST STOP -->
+      <!-- Sub Organizaion table stats here -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h4>Sub Organization</h3>
+                <button type="button" class="btn btn-primary pull-right btnsuborginsert" name="button">Add Suborg.</button>
+              </div>
+              <div class="box-body">
+                <table class="table table-striped table-bordered suborgtable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Organization Name</th>
+                      <th>SubOrg Name</th>
+                      <th>Details</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Sub Organizaion table End here -->
 
 
         <div class="modal fade" id="modal-insert-test" data-backdrop="static">
@@ -116,6 +143,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
           </div>
         </div>
+
+        <!-- Sub Organizaion Modal stats here -->
+
+        <div class="modal fade" id="modal-suborg" data-backdrop="static">
+          <div class="modal-dialog">
+
+            <form method="post" id="suborg_insert" class="form-horizontal" data-toggle="validator">
+              <?php echo validation_errors(); ?>
+              <?php echo form_open('suborg_insert'); ?>
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="suborgModalHeader"></h4>
+                </div>
+
+                <div class="modal-body">
+                  <div class="form-group has-feedback">
+                    <label class="col-sm-4 control-label">Organizaion Name</label>
+                    <div class="col-sm-8">
+                      <select class="col-sm-12 form-control select2" id="orgForSuborg" name="orgForSuborg" style="width: 100%;"  name="">
+
+                      </select>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <label class="col-sm-4 control-label">Sub Organizaion</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="suborgname" name="suborgname" placeholder="Enter Organization Address" minlength="4" required>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">Department Details</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="suborgdetails" name="suborgdetails" placeholder="Enter Organization Details">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <input type="hidden" name="suborgid" id="suborgid" value="">
+                  <input type="hidden" name="suborgaction" id="suborgaction" class="btn btn-success" value="" />
+                  <input type="submit" class="btn btn-success" id="SomodalSubmitBtn" value="" />
+                  <!-- <input type="submit" form="insert_form_test" class="btn btn-primary" name="action" value="Add" /> -->
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+        <!-- Sub Organizaion Modal End here -->
+
 
 
     </section>

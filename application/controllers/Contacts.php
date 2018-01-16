@@ -18,17 +18,32 @@ class Contacts extends CI_Controller
   {
     $this->load->view('header');
     $this->load->view('sidebar');
-    $this->load->view('contacts/addcontact');
-    $this->load->view('footer');
     echo "View Contacts";
+    $this->load->view('footer');
+
   }
   function Add_Contact()
   {
-    echo "View Contacts";
+    $this->load->view('header');
+    $this->load->view('sidebar');
+    $this->load->view('contacts/addcontact');
+    $this->load->view('footer');
+  }
+
+
+  function Export_Contacts()
+  {
+    $this->load->view('header');
+    $this->load->view('sidebar');
+    echo "Export Contacts";
+    $this->load->view('footer');
   }
   function Send_SMS()
   {
-    echo "View Contacts";
+    $this->load->view('header');
+    $this->load->view('sidebar');
+
+    $this->load->view('footer');
   }
 }
 
