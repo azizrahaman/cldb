@@ -17,7 +17,11 @@ class TableCrud extends CI_Model
 
     var $tablesuborg = "tbl_suborg";
     var $select_column_suborg = array("tbl_suborg.fld_uid", 'tbl_suborg.fld_org_id', 'tbl_suborg.fld_suborg', 'tbl_suborg.fld_details', 'tbl_organization.fld_orgname');
-    var $order_column_suborg = array(null, 'fld_org_id', 'fld_suborg', null, null);
+    var $order_column_suborg = array(null, 'fld_suborg', 'fld_org_id', null);
+
+    var $tabledesg = "tbl_designation";
+    var $select_column_desg = array('fld_uid' , 'fld_desgname');
+    var $order_column_desg = array(null, 'fld_desgname', null);
 
 // Organization orgDataTable
 
@@ -111,6 +115,52 @@ class TableCrud extends CI_Model
       $this->db->from($this->tablesuborg);
       return $this->db->count_all_results();
     }
+
+    // Designation Table Queryis Starts
+
+    function makeDesgQuery()
+    {
+      $this->db->select($this->select_column_desg);
+      $this->db->from($this->tabledesg);
+      if (isset($_POST["search"]["value"]))
+      {
+        $this->db->like("fld_desgname", $_POST["search"]["value"]);
+      }
+
+
+      if (isset($_POST["order"])) {
+        $this->db->order_by($this->order_column_org[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+      } else {
+        $this->db->order_by('fld_uid', 'DESC');
+      }
+    }
+
+    function makeDesgDatatables()
+    {
+      $this->makeDesgQuery();
+      if ($_POST['length'] != -1) {
+        $this->db->limit($_POST['length'], $_POST['start']);
+      }
+      $query = $this->db->get();
+      return $query->result();
+    }
+
+    function getDesgFilteredData()
+    {
+      $this->makeDesgQuery();
+      $query = $this->db->get();
+      return $query->num_rows();
+    }
+
+    function getDesgAllData()
+    {
+      $this->db->select('*');
+      $this->db->from($this->tabledesg);
+      return $this->db->count_all_results();
+    }
+
+    // Designation Table Queryis Ends
+
 
     //Insert New Data
 

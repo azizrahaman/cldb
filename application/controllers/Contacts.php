@@ -12,6 +12,7 @@ class Contacts extends CI_Controller
 			header('location:'.base_url().'index.php/Login');
 		}
     $this->load->model('TableCrud');
+    $this->load->model('Azmodal');
   }
 
   function View_Contacts()
@@ -24,9 +25,13 @@ class Contacts extends CI_Controller
   }
   function Add_Contact()
   {
+    $sql = $this->db->get('tbl_division')->result();
+    $data = [
+      'divs' => $sql
+    ];
     $this->load->view('header');
     $this->load->view('sidebar');
-    $this->load->view('contacts/addcontact');
+    $this->load->view('contacts/addcontact',$data);
     $this->load->view('footer');
   }
 
@@ -44,6 +49,42 @@ class Contacts extends CI_Controller
     $this->load->view('sidebar');
 
     $this->load->view('footer');
+  }
+
+  //Helper functions
+
+  public function GetDistricts()
+  {
+    $divid = $this->input->post('get_option');
+    $this->Azmodal->GetDistMod($divid);
+  }
+
+  public function GetUpazila()
+  {
+    $distid = $this->input->post('get_option');
+    $this->Azmodal->GetUpazilaMod($distid);
+  }
+
+  public function GetUnions()
+  {
+    $upaid = $this->input->post('get_option');
+    $this->Azmodal->GetUniMod($upaid);
+  }
+  public function GetVillages()
+  {
+    $unionid = $this->input->post('get_option');
+    $this->Azmodal->GetVillagesMod($unionid);
+  }
+
+  //
+  public function GetOrganization()
+  {
+    $this->Azmodal->getOrgaMod();
+  }
+
+  public function GetDesignation()
+  {
+    $this->Azmodal->getDesgMod();
   }
 }
 

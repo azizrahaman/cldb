@@ -65,10 +65,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- CRUD TEST STOP -->
       <!-- Sub Organizaion table stats here -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-8">
             <div class="box box-primary">
               <div class="box-header with-border">
-                <h4>Sub Organization</h3>
+                <h3 class="box-title">Sub Organization</h3>
                 <button type="button" class="btn btn-primary pull-right btnsuborginsert" name="button">Add Suborg.</button>
               </div>
               <div class="box-body">
@@ -76,9 +76,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Department Name</th>
                       <th>Organization Name</th>
-                      <th>SubOrg Name</th>
-                      <th>Details</th>
+                      <!-- <th>Details</th> -->
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -87,6 +87,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </table>
               </div>
             </div>
+          </div>
+          <div class="col-md-4">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Designations</h3>
+                  <button type="button" class="btn btn-primary pull-right btndesginsert" name="button">Add Desg.</button>
+                </div>
+                <div class="box-body">
+                  <table class="table table-striped table-bordered desgtable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Designation Name</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
           </div>
         </div>
 

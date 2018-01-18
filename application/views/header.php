@@ -50,6 +50,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <style>
+
+  .hidden-space {
+
+    word-spacing: -.2em;
+
+  }
+
   /*
    * Plugin: Select2
    * ---------------
@@ -196,7 +203,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <ul class="nav navbar-nav">
 
 
-      
+
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

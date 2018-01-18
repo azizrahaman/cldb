@@ -33,10 +33,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <!-- form start -->
 
-                  <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/addorg">
+                  <!-- <form role="form" method="post" action="<?php echo base_url();?>index.php/Libraries/addorg"> -->
                     <div class="box-body">
-                      <?php echo form_open('form'); ?>
-                      <?php echo validation_errors(); ?>
+                      <!-- <?php echo form_open('form'); ?> -->
+                      <!-- <?php echo validation_errors(); ?> -->
 
 
                       <div class="form-group">
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.box-body -->
 
-                  </form>
+                  <!-- </form> -->
                 </div>
                 <!-- /.box -->
               </div>

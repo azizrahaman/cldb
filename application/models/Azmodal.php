@@ -143,6 +143,41 @@ class Azmodal extends CI_Model
 			}
     }
 
+    public function GetVillagesMod($unionid)
+    {
+      if ($unionid != NULL) {
+        $sql = $this->db->get_where('tbl_village', array('fld_union_id' => $unionid))->result();
+        echo "<option></option>";
+        foreach ($sql as $row) {
+          echo "<option value=".$row->fld_uid.">".$row->fld_name." / ".$row->fld_bn_name."</option>";
+        }
+      } else {
+        exit;
+      }
+    }
+
+    function getOrgaMod()
+    {
+      $this->db->select('*');
+      $this->db->from('tbl_organization');
+      $query = $this->db->get()->result();
+      echo "<option></option>";
+      foreach ($query as $row) {
+        echo "<option value=".$row->fld_uid.">".$row->fld_orgname."</option>";
+      }
+    }
+
+    function getDesgMod()
+    {
+      $this->db->select('*');
+      $this->db->from('tbl_designation');
+      $query = $this->db->get()->result();
+      echo "<option></option>";
+      foreach ($query as $row) {
+        echo "<option value=".$row->fld_uid.">".$row->fld_desgname."</option>";
+      }
+    }
+
     public function GetVillMod($uniid)
     {
       if ($uniid != NULL) {
