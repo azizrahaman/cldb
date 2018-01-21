@@ -167,6 +167,8 @@ class TableCrud extends CI_Model
     function insert_crud($table, $data)
     {
       $this->db->insert($table, $data);
+      $insert_id = $this->db->insert_id();
+      return $insert_id;
     }
 
     //Fetch Single Row Item

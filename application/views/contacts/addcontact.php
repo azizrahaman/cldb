@@ -20,7 +20,7 @@
 
 
 
-            <form action="http://mycontact.otoworkz.my/contact/insert" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <form action="<?php echo base_url(); ?>index.php/Contacts/AddContact" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
             <div class="row">
             	<div class="col-sm-12"><h4><i class="fa fa-th"></i> Contact Information</h4><hr></div>
@@ -108,7 +108,6 @@
 
             		</div>
 
-
                 <hr>
 
             		<!-- company / organization, job title -->
@@ -118,21 +117,21 @@
 
                 				<div class="form-group">
                 					<label>Company / Organization</label>
-                          <select class="form-control orgclass select2" style="width: 100%;" onchange="" name="organization">
+                          <select class="form-control orgclass select2" style="width: 100%;" onchange="" name="organization[]">
                           </select>
                 				</div>
                 			</div>
                 			<div class="col-sm-4">
                 				<div class="form-group">
                 					<label>Department / Sub Org.</label>
-                          <select class="form-control suborgclass select2" style="width: 100%;" onchange="" name="suborg">
+                          <select class="form-control suborgclass select2" style="width: 100%;" onchange="" name="suborg[]">
                           </select>
                 				</div>
                 			</div>
                       <div class="col-sm-3">
                 				<div class="form-group">
                 					<label>Designation</label>
-                          <select class="form-control desgclass select2" style="width: 100%;" onchange="" name="Designation">
+                          <select class="form-control desgclass select2" style="width: 100%;" onchange="" name="designation[]">
                           </select>
                 				</div>
                 			</div>
@@ -150,7 +149,7 @@
             		<div class="row">
             			<div class="col-sm-4">
                     <label for="exampleInputEmail1">Parmanent Address</label>
-                    <form class="" action="" method="post">
+
 
                     <div class="form-group">
                       <!-- <input type="text" name="orgname" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> -->
@@ -183,12 +182,12 @@
                       <select class="form-control select2" id="villages" style="width: 100%;" onchange="" name="village-parma">
                       </select>
                     </div>
-                    </form>
+
 
             			</div>
             			<div class="col-sm-4">
                     <label for="exampleInputEmail1">Present Address</label>
-                    <form class="" action="" method="post">
+
                     <div class="form-group">
 
                       <!-- <input type="text" name="orgname" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> -->
@@ -221,7 +220,7 @@
                       <select class="form-control select2" id="villages1" style="width: 100%;" onchange="" name="village-prese">
                       </select>
                     </div>
-                    </form>
+
             			</div>
                   <div class="col-sm-4">
                     <div class="form-group">
@@ -243,7 +242,7 @@
             			<div class="col-sm-12">
             				<div class="form-group">
             					<label>Notes</label>
-                      <textarea name="name" class="form-control" id="user-details-text" name="note"></textarea>
+                      <textarea name="userdetails" class="form-control" id="user-details-text"></textarea>
             				</div>
             			</div>
             		</div><hr>
