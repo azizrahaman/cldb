@@ -24,7 +24,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Bootstrap validator -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/bower_components/validator.js"></script>
 <!-- Morris.js charts -->
 <script src="<?php echo base_url(); ?>assets/bower_components/raphael/raphael.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/bower_components/morris.js/morris.min.js"></script>
@@ -40,8 +40,6 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- Slimscroll -->
 <script src="<?php echo base_url(); ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -70,9 +68,10 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/dist/js/fileinput.js"></script>
-
+<!-- sweetalert -->
 <script src="<?php echo base_url(); ?>assets/bower_components/sweetalert/sweetalert.min.js"></script>
-
+<!-- trumbowyg text editor -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/aziz/trumbowyg/dist/trumbowyg.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/dist/js/azcustom.js"></script>
 
 </body>
