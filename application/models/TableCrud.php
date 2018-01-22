@@ -23,6 +23,10 @@ class TableCrud extends CI_Model
     var $select_column_desg = array('fld_uid' , 'fld_desgname');
     var $order_column_desg = array(null, 'fld_desgname', null);
 
+    var $tableuserinfo = "tbl_userinfo";
+    var $select_column_user = array('fld_uid', 'fld_gender', 'fld_name', 'fld_fname', 'fld_dob', 'fld_phone', 'fld_phone2', 'fld_phone3', 'fld_photo', 'fld_note', 'fld_creation', 'tua.fld_div_id_parma', 'tua.fld_dist_id_parma', 'tua.fld_upa_id_parma', 'tua.fld_uni_id_parma', 'tua.fld_vill_id_parma');
+    var $order_column_user = array(null, 'fld_name', 'fld_orgname', 'fld_desg', 'fld_district', 'fld_upazilla', 'fld_phone');
+
 // Organization orgDataTable
 
     function makeVillQuery()
@@ -161,6 +165,54 @@ class TableCrud extends CI_Model
 
     // Designation Table Queryis Ends
 
+
+    // User Table Query Starts
+
+    function makeUserQuery()
+    {
+      $this->db->select($this->select_column_user);
+      $this->db->from($this->tableuserinfo);
+      $this->db->join('tbl_user_address as tua', 'tbl_userinfo.fld_uid = tua.fld_user_id');
+
+      if (isset($_POST["search"]["value"])) {
+        $this->db->like("fld_name", $_POST["search"]["value"]);
+        $this->db->or_like("fld_org_id", $_POST["search"]["value"]);
+        $this->db->or_like("fld_suborg_id", $_POST["search"]["value"]);
+        $this->db->or_like("fld_desg_id", $_POST["search"]["value"]);
+      }
+
+      if (isset($_POST["order"])) {
+        $this->db->order_by($this->order_column_suborg[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+      } else {
+        $this->db->order_by('fld_uid', 'DESC');
+      }
+    }
+
+    function makeUserDatatables()
+    {
+      $this->makeVillQuery();
+      if ($_POST['length'] != -1) {
+        $this->db->limit($_POST['length'], $_POST['start']);
+      }
+      $query = $this->db->get();
+      return $query->result();
+    }
+
+    function getUserFilteredData()
+    {
+      $this->makeVillQuery();
+      $query = $this->db->get();
+      return $query->num_rows();
+    }
+
+    function getUserAllData()
+    {
+      $this->db->select('*');
+      $this->db->from($this->tableorg);
+      return $this->db->count_all_results();
+    }
+
+    // User Table Query Ends
 
     //Insert New Data
 

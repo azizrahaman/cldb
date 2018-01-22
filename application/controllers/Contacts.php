@@ -91,59 +91,41 @@ class Contacts extends CI_Controller
     $this->load->library('form_validation');
     $this->load->helper('form');
 
-    echo "Name: ";
+
     echo $gender = $this->input->post('gender');
-    echo "<br>";
-    echo "Name: ";
+
     echo $name = $this->input->post('fullname');
-    echo "<br>";
-    echo "F Name: ";
+
     echo $fathername = $this->input->post('fathername');
-    echo "<br>";
-    echo "Phone 1: ";
+
     echo $phone = $this->input->post('phoneno');
-    echo "<br>";
-    echo "Phone 2: ";
+
     echo $phone2 = $this->input->post('phoneno2');
-    echo "<br>";
-    echo "Phone 3: ";
+
     echo $phone3 = $this->input->post('phoneno3');
-    echo "<br>";
-    echo "Org: ";
-    echo "<br>";
+
     echo $dob = $this->input->post('dob');
-    echo "<br>";
-    echo "Division-P: ";
+
     echo $divisionpar = $this->input->post('division-parma');
-    echo "<br>";
-    echo "Dist-P: ";
+
     echo $districtpar = $this->input->post('district-parma');
-    echo "<br>";
-    echo "SubDist-P: ";
-    echo $upazillapar = $this->input->post('upazila-parma');
-    echo "<br>";
-    echo "Union-P: ";
+
+    echo $upazillapar = $this->input->post('upazilla-parma');
+
     echo $unionpar = $this->input->post('union-parma');
-    echo "<br>";
-    echo "Vill-P: ";
+
     echo $villpar = $this->input->post('village-parma');
-    echo "<br>";
-    echo "Divi-R: ";
+
     echo $divisionpre = $this->input->post('division-prese');
-    echo "<br>";
-    echo "Dist-R: ";
+
     echo $districtpre = $this->input->post('district-prese');
-    echo "<br>";
-    echo "SubDist-R: ";
-    echo $upazillapre = $this->input->post('upazila-prese');
-    echo "<br>";
-    echo "Unin-R: ";
+
+    echo $upazillapre = $this->input->post('upazilla-prese');
+
     echo $unionpre = $this->input->post('union-prese');
-    echo "<br>";
-    echo "Village-R: ";
+
     echo $villpre = $this->input->post('village-prese');
-    echo "<br>";
-    echo "Notes: ";
+
     $note = $this->input->post('userdetails');
     $date = new DateTime();
     $timestamp = $date->getTimestamp();
@@ -174,6 +156,26 @@ class Contacts extends CI_Controller
     $userId = $this->TableCrud->insert_crud('tbl_userinfo', $inputuser);
     //$this->db->insert('tbl_userinfo', $inputuser);
     echo "Data Inserted";
+
+    $useraddress = array();
+
+    $useraddress['fld_user_id'] = $userId;
+    $useraddress['fld_div_id_parma'] = $divisionpar;
+    $useraddress['fld_dist_id_parma'] = $districtpar;
+    $useraddress['fld_upa_id_parma'] = $upazillapar;
+    $useraddress['fld_uni_id_parma'] = $unionpar;
+    $useraddress['fld_vill_id_parma'] = $villpar;
+    $useraddress['fld_div_id_prese'] = $divisionpre;
+    $useraddress['fld_dist_id_prese'] = $districtpre;
+    $useraddress['fld_upa_id_prese'] = $upazillapre;
+    $useraddress['fld_uni_id_prese'] = $unionpre;
+    $useraddress['fld_vill_id_prese'] = $villpre;
+
+    if (is_array($useraddress)) {
+      $this->TableCrud->insert_crud('tbl_user_address', $useraddress);
+    }
+
+    echo "Address Inserted";
 
     echo "<br>";
     $data = array();
@@ -206,11 +208,12 @@ class Contacts extends CI_Controller
     foreach ($data as $row => $value) {
       $profession = array();
       $profession['fld_user_id'] = $userId;
-      $profession['fld_org_id'] = (isset($value['datas']) ? $value['datas'] : '');
+      $profession['fld_org_id'] = (isset($value['orgs']) ? $value['orgs'] : '');
       $profession['fld_suborg_id'] =  (isset($value['sorg']) ? $value['sorg'] : '');
       $profession['fld_desg_id'] = (isset($value['desg']) ? $value['desg'] : '');
 
-
+      $orgs_insert = $this->TableCrud->insert_crud('tbl_user_working', $profession);
+      echo 'Profession Inserted';
 
     }
 
