@@ -24,8 +24,8 @@ class TableCrud extends CI_Model
     var $order_column_desg = array(null, 'fld_desgname', null);
 
     var $tableuserinfo = "tbl_userinfo";
-    var $select_column_user = array('fld_uid', 'fld_gender', 'fld_name', 'fld_fname', 'fld_dob', 'fld_phone', 'fld_phone2', 'fld_phone3', 'fld_photo', 'fld_note', 'fld_creation', 'tua.fld_div_id_parma', 'tua.fld_dist_id_parma', 'tua.fld_upa_id_parma', 'tua.fld_uni_id_parma', 'tua.fld_vill_id_parma');
-    var $order_column_user = array(null, 'fld_name', 'fld_orgname', 'fld_desg', 'fld_district', 'fld_upazilla', 'fld_phone');
+    var $select_column_user = array('tbl_userinfo.fld_uid', 'fld_gender', 'fld_name', 'fld_fname', 'fld_dob', 'fld_phone', 'fld_phone2', 'fld_phone3', 'fld_photo', 'fld_note', 'fld_creation', 'tua.fld_div_id_parma', 'tua.fld_dist_id_parma', 'tua.fld_upa_id_parma', 'tua.fld_uni_id_parma', 'tua.fld_vill_id_parma');
+    var $order_column_user = array(null, 'fld_name', null, null, null);
 
 // Organization orgDataTable
 
@@ -172,17 +172,17 @@ class TableCrud extends CI_Model
     {
       $this->db->select($this->select_column_user);
       $this->db->from($this->tableuserinfo);
-      $this->db->join('tbl_user_address as tua', 'tbl_userinfo.fld_uid = tua.fld_user_id');
+      $this->db->join('tbl_user_address as tua', 'tbl_userinfo.fld_uid = tua.fld_user_id', 'left');
 
       if (isset($_POST["search"]["value"])) {
         $this->db->like("fld_name", $_POST["search"]["value"]);
-        $this->db->or_like("fld_org_id", $_POST["search"]["value"]);
-        $this->db->or_like("fld_suborg_id", $_POST["search"]["value"]);
-        $this->db->or_like("fld_desg_id", $_POST["search"]["value"]);
+        $this->db->or_like("fld_phone", $_POST["search"]["value"]);
+        $this->db->or_like("fld_phone2", $_POST["search"]["value"]);
+        $this->db->or_like("fld_phone3", $_POST["search"]["value"]);
       }
 
       if (isset($_POST["order"])) {
-        $this->db->order_by($this->order_column_suborg[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        $this->db->order_by($this->order_column_user[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
       } else {
         $this->db->order_by('fld_uid', 'DESC');
       }
@@ -190,7 +190,7 @@ class TableCrud extends CI_Model
 
     function makeUserDatatables()
     {
-      $this->makeVillQuery();
+      $this->makeUserQuery();
       if ($_POST['length'] != -1) {
         $this->db->limit($_POST['length'], $_POST['start']);
       }
@@ -200,7 +200,7 @@ class TableCrud extends CI_Model
 
     function getUserFilteredData()
     {
-      $this->makeVillQuery();
+      $this->makeUserQuery();
       $query = $this->db->get();
       return $query->num_rows();
     }
@@ -208,7 +208,7 @@ class TableCrud extends CI_Model
     function getUserAllData()
     {
       $this->db->select('*');
-      $this->db->from($this->tableorg);
+      $this->db->from($this->tableuserinfo);
       return $this->db->count_all_results();
     }
 
