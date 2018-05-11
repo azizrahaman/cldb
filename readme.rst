@@ -1,14 +1,24 @@
 ###################
-Personal CLDB For HAMS
+Contacts & Donations Management
 ###################
 
-CLDB is a people information gathering system. 
+A simple contacts & donation management system in codeigniter. 
 
 *******************
 Release Information
 *******************
 
 This repo contains in-development code for future releases.
+
+*******************
+Features
+*******************
+
+* Create contacts with photo, address, work & personal information
+* Find contacts using name, phone, address or work information
+* Export desired contact's list to pdf, excel or print to hard copy
+* Give donation to people
+* And much more
 
 *******************
 Server Requirements
